@@ -56,7 +56,8 @@ public final class Lexer {
         if (peek("(@|[A-Za-z])")){
             return lexIdentifier();
         }
-        else if (peek("0") || peek("-","[1-9]") || peek("[1-9]")){
+        else if (peek("[0-9]") || peek("-", "[1-9]")
+        || peek("-", "0", "\\.", "[0-9]")){
             return lexNumber();
         }
         else if (peek("'")){
@@ -76,10 +77,10 @@ public final class Lexer {
     }
 
     public Token lexNumber() {
-        if (peek("0", "[0-9]")) return chars.emit(Token.Type.INTEGER);
 
+        if (peek("0", "[0-9]")) return chars.emit(Token.Type.INTEGER);
         match("-");
-        match("[1-9]");
+        match("[0-9]");
 
         while(chars.has(0) && match("[0-9]"));
 

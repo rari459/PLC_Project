@@ -36,8 +36,8 @@ public class LexerTests {
     private static Stream<Arguments> testInteger() {
         return Stream.of(
                 Arguments.of("Single Digit", "1", true),
-                Arguments.of("Multiple Digits", "12345", true),
-                Arguments.of("Negative", "-1", true),
+                Arguments.of("Multiple Digits", "12402", true),
+                Arguments.of("Negative", "-98", true),
                 Arguments.of("Leading Zero", "01", false)
         );
     }
@@ -51,7 +51,7 @@ public class LexerTests {
     private static Stream<Arguments> testDecimal() {
         return Stream.of(
                 Arguments.of("Multiple Digits", "123.456", true),
-                Arguments.of("Negative Decimal", "-1.0", true),
+                Arguments.of("Negative Decimal", "-0.01", true),
                 Arguments.of("Trailing Decimal", "1.", false),
                 Arguments.of("Leading Decimal", ".5", false)
         );
