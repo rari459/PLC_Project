@@ -119,11 +119,6 @@ public final class Lexer {
 
         while (chars.has(0) &&
                 (peek("[^\"\n\r\\\\]") || peek("\\\\"))) {
-            /*if (!match("[^\"\n\r\\\\]"))
-            {
-                lexEscape();
-            }*/
-        //(peek("[^\"\n\r\\\\]") || peek("\\\\"))) {
             if (peek("\\\\")){
                 lexEscape();
             }
