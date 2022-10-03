@@ -122,7 +122,7 @@ public final class Parser {
                     Ast.Expression expr2 = parseExpression();
 
                     if (!peek(";")){
-                        throw new ParseException("Expected semicolon", tokens.get(-1).getIndex());
+                        throw new ParseException("Missing a closing semicolon", tokens.get(-1).getIndex());
                     } else {
                         return new Ast.Statement.Assignment(expr1, expr2);
                     }
@@ -131,7 +131,7 @@ public final class Parser {
 
                 else{
                     if (!peek(";")){
-                        throw new ParseException("Expected semicolon", tokens.get(-1).getIndex());
+                        throw new ParseException("Missing a closing semicolon", tokens.get(-1).getIndex());
                     } else {
                         return new Ast.Statement.Expression(expr1);
                     }
