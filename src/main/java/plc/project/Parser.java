@@ -84,7 +84,65 @@ public final class Parser {
      * statement, then it is an expression/assignment statement.
      */
     public Ast.Statement parseStatement() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        try {
+            if (peek("LET")){
+                match("LET");
+
+                return parseDeclarationStatement();
+            }
+            else if (peek("SWITCH")){
+                match("SWITCH");
+
+                return parseSwitchStatement();
+
+            }
+            else if (peek("IF")){
+                match("IF");
+
+                return parseIfStatement();
+
+            }
+            else if (peek("WHILE")){
+                match("WHILE");
+
+                return parseWhileStatement();
+
+            }
+            else if (peek("RETURN")){
+                match("RETURN");
+
+                return parseReturnStatement();
+
+            } else {
+                Ast.Expression expr1 = parseExpression();
+
+                if (peek("=")){
+                    match("=");
+
+                    Ast.Expression expr2 = parseExpression();
+
+                    if (!peek(";")){
+                        throw new ParseException("Expected semicolon", tokens.get(-1).getIndex());
+                    } else {
+                        return new Ast.Statement.Assignment(expr1, expr2);
+                    }
+
+                }
+
+                else{
+                    if (!peek(";")){
+                        throw new ParseException("Expected semicolon", tokens.get(-1).getIndex());
+                    } else {
+                        return new Ast.Statement.Expression(expr1);
+                    }
+
+                }
+            }
+
+        } catch (ParseException e){
+            throw new ParseException(e.getMessage(), e.getIndex());
+        }
+
     }
 
     /**
