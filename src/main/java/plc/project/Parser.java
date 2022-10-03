@@ -1,5 +1,6 @@
 package plc.project;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -84,8 +85,67 @@ public final class Parser {
      * statement, then it is an expression/assignment statement.
      */
     public Ast.Statement parseStatement() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        try {
+            if (peek("LET")){
+                match("LET");
+
+                return parseDeclarationStatement();
+            }
+            else if (peek("SWITCH")){
+                match("SWITCH");
+
+                return parseSwitchStatement();
+
+            }
+            else if (peek("IF")){
+                match("IF");
+
+                return parseIfStatement();
+
+            }
+            else if (peek("WHILE")){
+                match("WHILE");
+
+                return parseWhileStatement();
+
+            }
+            else if (peek("RETURN")){
+                match("RETURN");
+
+                return parseReturnStatement();
+
+            } else {
+                Ast.Expression expr1 = parseExpression();
+
+                if (peek("=")){
+                    match("=");
+
+                    Ast.Expression expr2 = parseExpression();
+
+                    if (!peek(";")){
+                        throw new ParseException("Missing a closing semicolon", tokens.get(-1).getIndex());
+                    } else {
+                        return new Ast.Statement.Assignment(expr1, expr2);
+                    }
+
+                }
+
+                else{
+                    if (!peek(";")){
+                        throw new ParseException("Missing a closing semicolon", tokens.get(-1).getIndex());
+                    } else {
+                        return new Ast.Statement.Expression(expr1);
+                    }
+
+                }
+            }
+
+        } catch (ParseException e){
+            throw new ParseException(e.getMessage(), e.getIndex());
+        }
+
     }
+
 
     /**
      * Parses a declaration statement from the {@code statement} rule. This
@@ -183,7 +243,63 @@ public final class Parser {
      * not strictly necessary.
      */
     public Ast.Expression parsePrimaryExpression() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        if (match("NIL"))
+        {
+            return new Ast.Expression.Literal(null);
+        }
+        else if (match("TRUE"))
+        {
+            return new Ast.Expression.Literal(true);
+        }
+        else if (match("FALSE"))
+        {
+            return new Ast.Expression.Literal(false);
+        }
+        else if (peek(Token.Type.INTEGER) || peek(Token.Type.DECIMAL)
+                || peek(Token.Type.CHARACTER) || peek(Token.Type.STRING))
+        {
+            Ast.Expression.Literal result = new Ast.Expression.Literal(tokens.get(0).getLiteral());
+
+            if (match(Token.Type.INTEGER) || match(Token.Type.DECIMAL)
+                    || match(Token.Type.CHARACTER) || match(Token.Type.STRING))
+            {
+                return result;
+            }
+        }
+        else if (match("("))
+        {
+            Ast.Expression.Group result = new Ast.Expression.Group(parseExpression());
+            match(")");
+            return result;
+        }
+        else if (peek(Token.Type.IDENTIFIER, "("))
+        {
+            String identifier = tokens.get(0).getLiteral();
+            /*List<Ast.Expression> expressions;
+            while (tokens.has(0) && !match(")"))
+            {
+                expressions.push_back( new Ast.Expression.Access(Optional.empty(), "expr1"));
+            }*/
+            match(Token.Type.IDENTIFIER, "(");
+
+            Ast.Expression.Function result = new Ast.Expression.Function(identifier,
+                    Arrays.asList(parseExpression()));
+            if (peek(Token.Type.IDENTIFIER))
+            {
+
+            }
+            while (peek(",", Token.Type.IDENTIFIER))
+            {
+                match(",");
+
+            }
+            if (!match(")"))
+            {
+                //throw
+            }
+            return result;
+        }
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -197,7 +313,33 @@ public final class Parser {
      * {@code peek(Token.Type.IDENTIFIER)} and {@code peek("literal")}.
      */
     private boolean peek(Object... patterns) {
-        throw new UnsupportedOperationException(); //TODO (in lecture)
+        for (int i = 0; i < patterns.length; i++)
+        {
+            if (!tokens.has(i))
+            {
+                return false;
+            }
+            else if (patterns[i] instanceof Token.Type)
+            {
+                if (patterns[i] != tokens.get(i).getType())
+                {
+                    return false;
+                }
+            }
+            else if (patterns[i] instanceof String)
+            {
+                if (!patterns[i].equals(tokens.get(i).getLiteral()))
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                throw new AssertionError("Invalid pattern object: " +
+                        patterns[i].getClass());
+            }
+        }
+        return true;
     }
 
     /**
@@ -205,9 +347,16 @@ public final class Parser {
      * and advances the token stream.
      */
     private boolean match(Object... patterns) {
-        throw new UnsupportedOperationException(); //TODO (in lecture)
+        boolean peek = peek(patterns);
+        if (peek)
+        {
+            for (int i = 0; i < patterns.length; i++)
+            {
+                tokens.advance();
+            }
+        }
+        return peek;
     }
-
     private static final class TokenStream {
 
         private final List<Token> tokens;
