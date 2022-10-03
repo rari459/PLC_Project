@@ -84,7 +84,27 @@ public final class Parser {
      * statement, then it is an expression/assignment statement.
      */
     public Ast.Statement parseStatement() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        if (peek("LET"))
+        {
+            parseDeclarationStatement();
+        }
+        else if (peek("SWITCH"))
+        {
+            parseSwitchStatement();
+        }
+        else if (peek("IF"))
+        {
+            parseIfStatement();
+        }
+        else if (peek("WHILE"))
+        {
+            parseWhileStatement();
+        }
+        else if (peek("RETURN"))
+        {
+            parseReturnStatement();
+        }
+        return new Ast.Statement.Expression(parseExpression());
     }
 
     /**
@@ -145,7 +165,7 @@ public final class Parser {
      * Parses the {@code expression} rule.
      */
     public Ast.Expression parseExpression() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -183,6 +203,30 @@ public final class Parser {
      * not strictly necessary.
      */
     public Ast.Expression parsePrimaryExpression() throws ParseException {
+        if (match("NIL"))
+        {
+            return new Ast.Expression.Literal(null);
+        }
+        else if (match("TRUE"))
+        {
+            return new Ast.Expression.Literal(true);
+        }
+        else if (match("FALSE"))
+        {
+            return new Ast.Expression.Literal(false);
+        }
+        else if (peek(Token.Type.INTEGER) || peek(Token.Type.DECIMAL)
+                || peek(Token.Type.CHARACTER) || peek(Token.Type.STRING))
+        {
+            return new Ast.Expression.Literal(tokens.get(0).getLiteral());
+        }
+        else if (match("("))
+        {
+            Ast.Expression.Group result = new Ast.Expression.Group(parseExpression());
+            match(")");
+            return result;
+        }
+
         throw new UnsupportedOperationException(); //TODO
     }
 
@@ -197,7 +241,33 @@ public final class Parser {
      * {@code peek(Token.Type.IDENTIFIER)} and {@code peek("literal")}.
      */
     private boolean peek(Object... patterns) {
-        throw new UnsupportedOperationException(); //TODO (in lecture)
+        for (int i = 0; i < patterns.length; i++)
+        {
+            if (!tokens.has(i))
+            {
+                return false;
+            }
+            else if (patterns[i] instanceof Token.Type)
+            {
+                if (patterns[i] != tokens.get(i).getType())
+                {
+                    return false;
+                }
+            }
+            else if (patterns[i] instanceof String)
+            {
+                if (!patterns[i].equals(tokens.get(i).getLiteral()))
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                throw new AssertionError("Invalid pattern object: " +
+                        patterns[i].getClass());
+            }
+        }
+        return true;
     }
 
     /**
@@ -205,9 +275,16 @@ public final class Parser {
      * and advances the token stream.
      */
     private boolean match(Object... patterns) {
-        throw new UnsupportedOperationException(); //TODO (in lecture)
+        boolean peek = peek(patterns);
+        if (peek)
+        {
+            for (int i = 0; i < patterns.length; i++)
+            {
+                tokens.advance();
+            }
+        }
+        return peek;
     }
-
     private static final class TokenStream {
 
         private final List<Token> tokens;
