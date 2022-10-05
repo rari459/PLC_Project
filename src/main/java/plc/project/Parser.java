@@ -205,21 +205,55 @@ public final class Parser {
      * Parses the {@code expression} rule.
      */
     public Ast.Expression parseExpression() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        try {
+            return parseLogicalExpression();
+        } catch (ParseException e){
+            throw new ParseException(e.getMessage(), e.getIndex());
+        }
     }
 
     /**
      * Parses the {@code logical-expression} rule.
      */
     public Ast.Expression parseLogicalExpression() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        Ast.Expression comp_exp1 = parseComparisonExpression();
+
+        while (peek("&&") || peek("||")) {
+            if (match("&&"));
+            else match("||");
+
+            String logical_operation = tokens.get(-1).getLiteral();
+
+            Ast.Expression comp_exp2 = parseComparisonExpression();
+
+            comp_exp1 = new Ast.Expression.Binary(logical_operation, comp_exp1, comp_exp2);
+        }
+
+        return comp_exp1;
+
+
     }
 
     /**
      * Parses the {@code equality-expression} rule.
      */
     public Ast.Expression parseComparisonExpression() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        Ast.Expression add1 = parseAdditiveExpression();
+
+        while (peek("<") || peek(">") || peek("==") || peek("!=")){
+            if (match("<"));
+            else if (match(">"));
+            else if (match("=="));
+            else match("!=");
+
+            String comp_operation = tokens.get(-1).getLiteral();
+
+            Ast.Expression add2 = parseAdditiveExpression();
+
+            add1 = new Ast.Expression.Binary(comp_operation, add1, add2);
+        }
+
+        return add1;
     }
 
     /**
