@@ -260,14 +260,39 @@ public final class Parser {
      * Parses the {@code additive-expression} rule.
      */
     public Ast.Expression parseAdditiveExpression() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        Ast.Expression mult_expr1 = parseMultiplicativeExpression();
+
+        while (peek("+") || peek("-")) {
+            if (match("+"));
+            else match("-");
+
+            String additive_operation = tokens.get(-1).getLiteral();
+
+            Ast.Expression mult_expr2 = parseMultiplicativeExpression();
+
+            mult_expr1 = new Ast.Expression.Binary(additive_operation, mult_expr1, mult_expr2);
+        }
+        return mult_expr1;
     }
 
     /**
      * Parses the {@code multiplicative-expression} rule.
      */
     public Ast.Expression parseMultiplicativeExpression() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        Ast.Expression primary_expr1 = parsePrimaryExpression();
+
+        while (peek("*") || peek("/") || peek("^")) {
+            if (match("*"));
+            else if (match("/"));
+            else match("^");
+
+            String mult_operation = tokens.get(-1).getLiteral();
+
+            Ast.Expression primary_expr2 = parsePrimaryExpression();
+
+            primary_expr1 = new Ast.Expression.Binary(mult_operation, primary_expr1, primary_expr2);
+        }
+        return primary_expr1;
     }
 
     /**
