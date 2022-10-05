@@ -1,7 +1,9 @@
 package plc.project;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The parser takes the sequence of tokens emitted by the lexer and turns that
@@ -327,37 +329,47 @@ public final class Parser {
         }
         else if (match("("))
         {
-            Ast.Expression.Group result = new Ast.Expression.Group(parseExpression());
-            match(")");
-            return result;
+            if (match(")")) {
+                return new Ast.Expression.Group(new Ast.Expression.Access(Optional.empty(), tokens.get(-2).getLiteral()));
+            }
+            if (peek(Token.Type.IDENTIFIER, Token.Type.OPERATOR))
+            {
+                Ast.Expression.Group result = new Ast.Expression.Group(parseLogicalExpression());
+                match(")");
+                return result;
+            }
         }
         else if (peek(Token.Type.IDENTIFIER, "("))
         {
-            String identifier = tokens.get(0).getLiteral();
-            /*List<Ast.Expression> expressions;
-            while (tokens.has(0) && !match(")"))
-            {
-                expressions.push_back( new Ast.Expression.Access(Optional.empty(), "expr1"));
-            }*/
+            String ident = tokens.get(0).getLiteral();
             match(Token.Type.IDENTIFIER, "(");
 
-            Ast.Expression.Function result = new Ast.Expression.Function(identifier,
-                    Arrays.asList(parseExpression()));
-            if (peek(Token.Type.IDENTIFIER))
+            List<Ast.Expression> expressions = new ArrayList<Ast.Expression>();
+            while (!match(")"))
             {
-
-            }
-            while (peek(",", Token.Type.IDENTIFIER))
-            {
+                if (match(Token.Type.IDENTIFIER))
+                {
+                    expressions.add(new Ast.Expression.Access(Optional.empty(), tokens.get(-1).getLiteral()));
+                }
                 match(",");
-
             }
-            if (!match(")"))
-            {
-                //throw
-            }
-            return result;
+            return new Ast.Expression.Function(ident, expressions);
         }
+        else if (peek(Token.Type.IDENTIFIER, "["))
+        {
+            String listStr = tokens.get(0).getLiteral();
+            match(Token.Type.IDENTIFIER, "[");
+            //can there be an identifier[]
+            if (peek(Token.Type.IDENTIFIER, Token.Type.OPERATOR))
+            {
+                String expr = tokens.get(0).getLiteral();
+                match(Token.Type.IDENTIFIER, Token.Type.OPERATOR);
+                Ast.Expression.Access result = new Ast.Expression.Access(Optional.of(new Ast.Expression.Access(Optional.empty(), expr)), listStr);
+                match(Token.Type.IDENTIFIER, "]");
+                return result;
+            }
+        }
+        //specify throw ParseException error here instead
         throw new UnsupportedOperationException();
     }
 
