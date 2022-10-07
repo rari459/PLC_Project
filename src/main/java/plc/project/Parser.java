@@ -1,5 +1,7 @@
 package plc.project;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -303,63 +305,83 @@ public final class Parser {
      * functions. It may be helpful to break these up into other methods but is
      * not strictly necessary.
      */
-    public Ast.Expression parsePrimaryExpression() throws ParseException {
+    public String replaceEscape(String lit)
+    {
+        lit = lit.replace("\\n", "\n");
+        lit = lit.replace("\\b", "\b");
+        lit = lit.replace("\\r", "\r");
+        lit = lit.replace("\\t", "\t");
+        lit = lit.replace("\\\\", "\\");
+        lit = lit.replace("\\'", "\'");
+        lit = lit.replace("\\", "\"");
+        return lit;
+    }
+    public Ast.Expression.Literal literals()
+    {
         if (match("NIL"))
         {
             return new Ast.Expression.Literal(null);
         }
         else if (match("TRUE"))
         {
-            return new Ast.Expression.Literal(true);
+            return new Ast.Expression.Literal(tokens.get(-1).getLiteral());
         }
         else if (match("FALSE"))
         {
-            return new Ast.Expression.Literal(false);
+            new Ast.Expression.Literal(Boolean.FALSE);
         }
-        else if (peek(Token.Type.INTEGER) || peek(Token.Type.DECIMAL)
-                || peek(Token.Type.CHARACTER) || peek(Token.Type.STRING))
+        else if (match(Token.Type.INTEGER))
         {
-            Ast.Expression.Literal result = new Ast.Expression.Literal(tokens.get(0).getLiteral());
-
-            if (match(Token.Type.INTEGER) || match(Token.Type.DECIMAL)
-                    || match(Token.Type.CHARACTER) || match(Token.Type.STRING))
-            {
-                return result;
-            }
+            return new Ast.Expression.Literal(new BigInteger(tokens.get(-1).getLiteral()));
         }
+        else if (match(Token.Type.DECIMAL))
+        {
+            return new Ast.Expression.Literal(new BigDecimal(tokens.get(-1).getLiteral()));
+        }
+        else if (match(Token.Type.CHARACTER))
+        {
+            String liter = tokens.get(-1).getLiteral().replace("\'", "");
+            liter = replaceEscape(liter);
+            return new Ast.Expression.Literal(liter);
+        }
+        match(Token.Type.STRING);
+        String result = tokens.get(-1).getLiteral().replace("\"", "");
+        result = replaceEscape(result);
+
+        return new Ast.Expression.Literal(result);
+    }
+    public Ast.Expression parsePrimaryExpression() throws ParseException {
+        if (peek("NIL") || peek("TRUE") || peek("FALSE") ||
+                peek(Token.Type.INTEGER) || peek(Token.Type.DECIMAL) ||
+                peek(Token.Type.CHARACTER) || peek(Token.Type.STRING))
+        {
+            return literals();
+        }
+
         else if (match("("))
         {
-            if (match(")")) {
-                return new Ast.Expression.Group(new Ast.Expression.Access(Optional.empty(), tokens.get(-2).getLiteral()));
-            }
-            if (peek(Token.Type.IDENTIFIER, Token.Type.OPERATOR))
-            {
-                Ast.Expression.Group result = new Ast.Expression.Group(parseLogicalExpression());
-                match(")");
-                return result;
-            }
+            Ast.Expression.Group result = new Ast.Expression.Group(parseExpression());
+            match(")");
+            return result;
         }
         else if (peek(Token.Type.IDENTIFIER, "("))
         {
-            String ident = tokens.get(0).getLiteral();
             match(Token.Type.IDENTIFIER, "(");
+            String ident = tokens.get(-2).getLiteral();
 
             List<Ast.Expression> expressions = new ArrayList<Ast.Expression>();
             while (!match(")"))
             {
-                if (match(Token.Type.IDENTIFIER))
-                {
-                    expressions.add(new Ast.Expression.Access(Optional.empty(), tokens.get(-1).getLiteral()));
-                }
+                expressions.add(parseExpression());
                 match(",");
             }
             return new Ast.Expression.Function(ident, expressions);
         }
         else if (peek(Token.Type.IDENTIFIER, "["))
         {
-            String listStr = tokens.get(0).getLiteral();
             match(Token.Type.IDENTIFIER, "[");
-            //can there be an identifier[]
+            String listStr = tokens.get(-2).getLiteral();
+
             if (peek(Token.Type.IDENTIFIER, Token.Type.OPERATOR))
             {
                 String expr = tokens.get(0).getLiteral();
@@ -368,6 +390,10 @@ public final class Parser {
                 match(Token.Type.IDENTIFIER, "]");
                 return result;
             }
+        }
+        else if (match(Token.Type.IDENTIFIER))
+        {
+            return new Ast.Expression.Access(Optional.empty(), tokens.get(-1).getLiteral());
         }
         //specify throw ParseException error here instead
         throw new UnsupportedOperationException();
