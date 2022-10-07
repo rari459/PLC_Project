@@ -324,7 +324,7 @@ public final class Parser {
         }
         else if (match("TRUE"))
         {
-            return new Ast.Expression.Literal(tokens.get(-1).getLiteral());
+            return new Ast.Expression.Literal(Boolean.TRUE);
         }
         else if (match("FALSE"))
         {
