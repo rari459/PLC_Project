@@ -342,7 +342,7 @@ public final class Parser {
         {
             String liter = tokens.get(-1).getLiteral().replace("\'", "");
             liter = replaceEscape(liter);
-            return new Ast.Expression.Literal(liter);
+            return new Ast.Expression.Literal(liter.charAt(0));
         }
         match(Token.Type.STRING);
         String result = tokens.get(-1).getLiteral().replace("\"", "");
