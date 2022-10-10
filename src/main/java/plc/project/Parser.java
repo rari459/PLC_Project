@@ -118,26 +118,19 @@ public final class Parser {
             } else {
                 Ast.Expression expr1 = parseExpression();
 
-                if (peek("=")){
-                    match("=");
-
-                        Ast.Expression expr2 = parseExpression();
-
-                        if (!match(";")) {
-                            throw new ParseException("Missing a closing semicolon", tokens.get(-1).getIndex());
-                        } else {
-                            return new Ast.Statement.Assignment(expr1, expr2);
-                        }
-
-                }
-
-                else{
-                    if (!match(";")){
+                if (!match("=")) {
+                    if (!match(";")) {
                         throw new ParseException("Missing a closing semicolon", tokens.get(-1).getIndex());
                     } else {
                         return new Ast.Statement.Expression(expr1);
                     }
+                }
+                Ast.Expression expr2 = parseExpression();
 
+                if (!match(";")) {
+                    throw new ParseException("Missing a closing semicolon", tokens.get(-1).getIndex());
+                } else {
+                    return new Ast.Statement.Assignment(expr1, expr2);
                 }
             }
 
@@ -260,6 +253,7 @@ public final class Parser {
             }
 
             return add1;
+
         } catch (ParseException e){
             throw new ParseException(e.getMessage(), e.getIndex());
         }

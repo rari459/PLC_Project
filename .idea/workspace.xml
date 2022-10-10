@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Fixed Missing Value exception in Statement Assignment">
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Fixed Primary Expression to recognize exceptions, only missing test is testBinaryEquality">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/ParserExpressionTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/ParserExpressionTests.java" afterDir="false" />
@@ -242,7 +242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665419585506</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fixed Primary Expression to recognize exceptions, only missing test is testBinaryEquality">
+      <created>1665425023418</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1665425023418</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -260,6 +267,18 @@
     <MESSAGE value="Downloaded necessary files" />
     <MESSAGE value="Finish if-else conditional statement for parse statement" />
     <MESSAGE value="Fixed Missing Value exception in Statement Assignment" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Missing Value exception in Statement Assignment" />
+    <MESSAGE value="Fixed Primary Expression to recognize exceptions, only missing test is testBinaryEquality" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Primary Expression to recognize exceptions, only missing test is testBinaryEquality" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/plc/project/Parser.java</url>
+          <line>241</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
