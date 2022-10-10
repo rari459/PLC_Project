@@ -124,12 +124,16 @@ public final class Parser {
                 if (peek("=")){
                     match("=");
 
-                    Ast.Expression expr2 = parseExpression();
-
-                    if (!peek(";")){
-                        throw new ParseException("Missing a closing semicolon", tokens.get(-1).getIndex());
+                    if (!match(".") || match(";")){
+                        throw new ParseException("Missing Value", tokens.get(-1).getIndex());
                     } else {
-                        return new Ast.Statement.Assignment(expr1, expr2);
+                        Ast.Expression expr2 = parseExpression();
+
+                        if (!peek(";")) {
+                            throw new ParseException("Missing a closing semicolon", tokens.get(-1).getIndex());
+                        } else {
+                            return new Ast.Statement.Assignment(expr1, expr2);
+                        }
                     }
 
                 }
@@ -179,8 +183,8 @@ public final class Parser {
     }
 
     /**
-     * Parses a case or default statement block from the {@code switch} rule. 
-     * This method should only be called if the next tokens start the case or 
+     * Parses a case or default statement block from the {@code switch} rule.
+     * This method should only be called if the next tokens start the case or
      * default block of a switch statement, aka {@code CASE} or {@code DEFAULT}.
      */
     public Ast.Statement.Case parseCaseStatement() throws ParseException {
