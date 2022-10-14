@@ -144,10 +144,8 @@ public final class Parser {
             {
                 throw new ParseException("Missing Semicolon", tokens.get(-1).getIndex());
             }
-            else
-            {
-                return new Ast.Global(name, true, Optional.of(expr));
-            }
+
+                return new Ast.Global(name, true, Optional.ofNullable(expr));
         } catch (ParseException e){
             throw new ParseException(e.getMessage(), e.getIndex());
         }
@@ -325,6 +323,7 @@ public final class Parser {
             match(Token.Type.IDENTIFIER);
 
             Ast.Expression expr = null;
+
             if (match("="))
             {
                 expr = parseExpression();
@@ -334,7 +333,8 @@ public final class Parser {
             {
                 throw new ParseException("Missing Semicolon", tokens.get(-1).getIndex());
             }
-            return new Ast.Statement.Declaration(name, Optional.of(expr));
+
+            return new Ast.Statement.Declaration(name, Optional.ofNullable(expr));
         } catch (ParseException e){
             throw new ParseException(e.getMessage(), e.getIndex());
         }
@@ -436,7 +436,7 @@ public final class Parser {
             Ast.Expression exp = parseExpression();
             if (!match("DO"))
             {
-                throw new ParseException("Missing DO", tokens.get(-1).getIndex());
+                throw new ParseException("Missing \"DO\"", tokens.get(-1).getIndex());
             }
             List<Ast.Statement> block = new ArrayList<>();
             while (!peek("END") && !peek("LIST") && !peek("VAR")
@@ -450,10 +450,7 @@ public final class Parser {
                 throw new ParseException("Missing END", tokens.get(-1).getIndex());
             }
 
-            if (!match(";"))
-            {
-                throw new ParseException("Missing a closing semicolon", tokens.get(-1).getIndex());
-            }
+
             return new Ast.Statement.While(exp, block);
         } catch (ParseException e){
             throw new ParseException(e.getMessage(), e.getIndex());
