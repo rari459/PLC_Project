@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Fixed Primary Expression to recognize exceptions, only missing test is testBinaryEquality">
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Fixed declaration and while statement methods to pass given tests.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/ParserTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/ParserTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +44,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="showPreview" value="true" />
   </component>
   <component name="ProjectId" id="2E5q0NmPFI1IplMyUmWWeJ7jrtz" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -248,7 +252,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665425023418</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Fixed declaration and while statement methods to pass given tests.">
+      <created>1665759527318</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1665759527318</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -267,7 +278,8 @@
     <MESSAGE value="Finish if-else conditional statement for parse statement" />
     <MESSAGE value="Fixed Missing Value exception in Statement Assignment" />
     <MESSAGE value="Fixed Primary Expression to recognize exceptions, only missing test is testBinaryEquality" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Primary Expression to recognize exceptions, only missing test is testBinaryEquality" />
+    <MESSAGE value="Fixed declaration and while statement methods to pass given tests." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed declaration and while statement methods to pass given tests." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -276,6 +288,11 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="8" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/plc/project/Parser.java</url>
+          <line>356</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

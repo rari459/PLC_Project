@@ -236,7 +236,7 @@ public final class Parser {
         {
             List<Ast.Statement> block = new ArrayList<>();
             while (!peek("END") && !peek("LIST") && !peek("VAR")
-                    && !peek("VAL") && !peek("FUN"))
+                    && !peek("VAL") && !peek("FUN") && !peek("ELSE"))
             {
                 block.add(parseStatement());
             }
@@ -355,7 +355,7 @@ public final class Parser {
             }
 
             List<Ast.Statement> then = parseBlock();
-            List<Ast.Statement> els = new ArrayList<>();
+            List<Ast.Statement> els = new ArrayList<>();   //WE ARE CONSUMING THE ELSE HERE
             if (match("ELSE"))
             {
                 els = parseBlock();
