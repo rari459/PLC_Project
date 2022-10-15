@@ -179,7 +179,7 @@ public final class Parser {
             }
             else
             {
-                return new Ast.Global(name, true, Optional.of(expr));
+                return new Ast.Global(name, false, Optional.of(expr));
             }
         } catch (ParseException e){
             throw new ParseException(e.getMessage(), e.getIndex());

@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Fixed declaration and while statement methods to pass given tests.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Fixed  if-statement methods to pass given tests.">
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/ParserTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/ParserTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -259,7 +257,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665759527318</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Fixed  if-statement methods to pass given tests.">
+      <created>1665795075099</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1665795075099</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -279,7 +284,8 @@
     <MESSAGE value="Fixed Missing Value exception in Statement Assignment" />
     <MESSAGE value="Fixed Primary Expression to recognize exceptions, only missing test is testBinaryEquality" />
     <MESSAGE value="Fixed declaration and while statement methods to pass given tests." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed declaration and while statement methods to pass given tests." />
+    <MESSAGE value="Fixed  if-statement methods to pass given tests." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed  if-statement methods to pass given tests." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -288,11 +294,6 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="8" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/plc/project/Parser.java</url>
-          <line>356</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
