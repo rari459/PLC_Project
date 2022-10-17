@@ -236,7 +236,8 @@ public final class Parser {
         {
             List<Ast.Statement> block = new ArrayList<>();
             while (!peek("END") && !peek("LIST") && !peek("VAR")
-                    && !peek("VAL") && !peek("FUN") && !peek("ELSE"))
+                    && !peek("VAL") && !peek("FUN") && !peek("ELSE")
+                    && !peek("CASE") && !peek("DEFAULT"))
             {
                 block.add(parseStatement());
             }
