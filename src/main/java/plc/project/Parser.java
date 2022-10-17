@@ -194,34 +194,48 @@ public final class Parser {
         try
         {
             match("FUN");
-            String name = tokens.get(0).getLiteral();
-            match(Token.Type.IDENTIFIER, "(");
-            List<String> func = new ArrayList<>();
+            if (match(Token.Type.IDENTIFIER)) {
+                String name = tokens.get(-1).getLiteral();
 
-            if (match(Token.Type.IDENTIFIER))
-            {
-                func.add(tokens.get(-1).getLiteral());
-            }
-            while (match(","))
-            {
-                if (!peek(Token.Type.IDENTIFIER))
-                {
-                    throw new ParseException("Trailing Comma", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
-                }
-                func.add(tokens.get(0).getLiteral());
-            }
+                if (match("(")){
+                    List<String> func = new ArrayList<>();
 
-            List<Ast.Statement> exp = new ArrayList<>();
-            if (match(")", "DO")) {
-                exp = parseBlock();
-                if (!match("END"))
-                {
-                    throw new ParseException("No END", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                    if (match(Token.Type.IDENTIFIER))
+                    {
+                        func.add(tokens.get(-1).getLiteral());
+                    }
+                    while (match(","))
+                    {
+                        if (!match(Token.Type.IDENTIFIER))
+                        {
+                            throw new ParseException("Trailing Comma", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                        }
+                        func.add(tokens.get(-1).getLiteral());
+                    }
+
+                    List<Ast.Statement> exp = new ArrayList<>();
+                    if (match(")")){
+                        if (!match("DO")){
+                            throw new ParseException("Expected DO", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                        }
+                        exp = parseBlock();
+                        if (!match("END"))
+                        {
+                            throw new ParseException("No END", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                        }
+                    } else {
+                        throw new ParseException("Missing Parenthesis", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                    }
+                    return new Ast.Function(name, func, exp);
+
+                } else {
+                    throw new ParseException("Missing Parenthesis", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
                 }
             } else {
-                throw new ParseException("Missing Parenthesis", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                throw new ParseException("Expected Function Name", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
             }
-            return new Ast.Function(name, func, exp);
+
+
         } catch (ParseException e){
             throw new ParseException(e.getMessage(), e.getIndex());
         }
