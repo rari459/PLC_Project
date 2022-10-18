@@ -103,8 +103,7 @@ public final class Parser {
             if (match("]")) {
                 if (match(";"))
                 {
-                    //return new Ast.Global(name, true, Optional.ofNullable(expressions));
-                    return new Ast.Global(name, true, Optional.of(expr1));
+                    return new Ast.Global(name, true, Optional.of(new Ast.Expression.PlcList(expressions)));
                 }
                 else
                 {

@@ -57,11 +57,12 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/murar/Downloads/Ast.java&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.ParserTests.testFunctionExpression">
+  <component name="RunManager" selected="Gradle.ParserTests">
     <configuration name="ParserTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -192,8 +193,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.ParserTests.testFunctionExpression" />
         <item itemvalue="Gradle.ParserTests" />
+        <item itemvalue="Gradle.ParserTests.testFunctionExpression" />
         <item itemvalue="Gradle.ParserTests.testScenarioParseException" />
         <item itemvalue="Gradle.ParserTests.testReturnStatement" />
         <item itemvalue="Gradle.ParserTests.testDeclarationStatement" />
@@ -208,6 +209,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1661895572447</updated>
+      <workItem from="1666039725849" duration="2067000" />
+      <workItem from="1666096690438" duration="254000" />
     </task>
     <task id="LOCAL-00001" summary="Downloaded necessary files">
       <created>1664764021699</created>
@@ -288,6 +291,9 @@
     </task>
     <option name="localTasksCounter" value="12" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
