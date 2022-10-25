@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Updated parseBlock to fix error in switchStatement tests">
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Updated parseFunction to fix error in function tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +61,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.ParserTests">
+  <component name="RunManager" selected="Gradle.ParserTests.testScenarioParseException">
     <configuration name="ParserTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -193,9 +192,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ParserTests.testScenarioParseException" />
         <item itemvalue="Gradle.ParserTests" />
         <item itemvalue="Gradle.ParserTests.testFunctionExpression" />
-        <item itemvalue="Gradle.ParserTests.testScenarioParseException" />
         <item itemvalue="Gradle.ParserTests.testReturnStatement" />
         <item itemvalue="Gradle.ParserTests.testDeclarationStatement" />
       </list>
@@ -289,7 +288,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666024200507</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Updated parseFunction to fix error in function tests">
+      <created>1666025400383</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1666025400383</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -316,7 +322,8 @@
     <MESSAGE value="Fixed  parseImmutable method to pass given tests." />
     <MESSAGE value="Updated parseException to give correct index by taking into account of the length of the last token." />
     <MESSAGE value="Updated parseBlock to fix error in switchStatement tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated parseBlock to fix error in switchStatement tests" />
+    <MESSAGE value="Updated parseFunction to fix error in function tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated parseFunction to fix error in function tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
