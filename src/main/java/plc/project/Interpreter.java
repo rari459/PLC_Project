@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
@@ -45,7 +47,18 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
     @Override
     public Environment.PlcObject visit(Ast.Statement.Declaration ast) {
-        throw new UnsupportedOperationException(); //TODO (in lecture)
+        if (ast.getValue().isPresent())
+        {
+            Ast.Expression exp = ast.getValue().get();
+            scope.defineVariable(ast.getName(), true, visit(exp));
+            return new Environment.PlcObject(getScope(), visit(exp));
+        }
+
+        else
+        {
+            scope.defineVariable(ast.getName(), true, Environment.NIL);
+            return new Environment.PlcObject(getScope(), Environment.NIL);
+        }
     }
 
     @Override
@@ -80,7 +93,11 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
     @Override
     public Environment.PlcObject visit(Ast.Expression.Literal ast) {
-        throw new UnsupportedOperationException(); //TODO
+        if (ast.getLiteral() == null)
+        {
+            return Environment.NIL;
+        }
+        return Environment.create(ast.getLiteral());
     }
 
     @Override
@@ -95,7 +112,21 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
     @Override
     public Environment.PlcObject visit(Ast.Expression.Access ast) {
-        throw new UnsupportedOperationException(); //TODO
+        if (ast.getOffset().isPresent())
+        {
+            Object offset = visit(ast.getOffset().get()).getValue();
+
+            if (!offset.getClass().equals(BigInteger.class))
+            {
+                //throw exception
+            }
+            Object astVal = scope.lookupVariable(ast.getName()).getValue().getValue();
+            if (astVal instanceof List)
+            {
+                return Environment.create(((List<?>) astVal).get(Integer.parseInt(offset.toString())));
+            }
+        }
+        return scope.lookupVariable(ast.getName()).getValue();
     }
 
     @Override
@@ -105,7 +136,16 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
     @Override
     public Environment.PlcObject visit(Ast.Expression.PlcList ast) {
-        throw new UnsupportedOperationException(); //TODO
+        List<Ast.Expression> values = ast.getValues();
+        ArrayList newList = new ArrayList();
+
+        for (int i = 0; i < values.size(); i++)
+        {
+            newList.add(visit(values.get(i)).getValue());
+        }
+
+        Object value = newList;
+        return Environment.create(value);
     }
 
     /**
