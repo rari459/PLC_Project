@@ -131,7 +131,15 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
     @Override
     public Environment.PlcObject visit(Ast.Expression.Function ast) {
-        throw new UnsupportedOperationException(); //TODO
+        List<Environment.PlcObject> argList = new ArrayList<>(); //make list to hold args
+
+        for (int i = 0; i < ast.getArguments().size(); i++){ //copy over args into the new list
+            argList.add(visit(ast.getArguments().get(i)));
+        }
+
+        Environment.Function f = scope.lookupFunction(ast.getName(), ast.getArguments().size()); //define new function with given name and size
+        return f.invoke(argList); //invoke and return
+
     }
 
     @Override
