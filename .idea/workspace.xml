@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Finished visit StatementExp, Global">
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Finished Statement Assignment">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Interpreter.java" afterDir="false" />
     </list>
@@ -109,7 +109,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="InterpreterTests.testGlobal" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="InterpreterTests.testFunction" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -122,7 +122,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;plc.project.InterpreterTests.testGlobal&quot;" />
+            <option value="&quot;plc.project.InterpreterTests.testFunction&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -195,9 +195,9 @@
       <list>
         <item itemvalue="Gradle.InterpreterTests" />
         <item itemvalue="Gradle.InterpreterTests.testIfStatement" />
-        <item itemvalue="Gradle.InterpreterTests.testVariableAssignmentStatement" />
-        <item itemvalue="Gradle.InterpreterTests.testGlobal" />
+        <item itemvalue="Gradle.InterpreterTests.testFunction" />
         <item itemvalue="Gradle.InterpreterTests.testDeclarationStatement" />
+        <item itemvalue="Gradle.InterpreterTests.testVariableAssignmentStatement" />
       </list>
     </recent_temporary>
   </component>
@@ -317,7 +317,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667315378225</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Finished Statement Assignment">
+      <created>1667321437937</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1667321437937</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -348,7 +355,8 @@
     <MESSAGE value="Finished visit FunctionExpression" />
     <MESSAGE value="Finished visit ReturnExpression and GroupExpression" />
     <MESSAGE value="Finished visit StatementExp, Global" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished visit StatementExp, Global" />
+    <MESSAGE value="Finished Statement Assignment" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished Statement Assignment" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -2,9 +2,7 @@ package plc.project;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.RoundingMode;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
@@ -24,8 +22,8 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
     @Override
     public Environment.PlcObject visit(Ast.Source ast) {
-        List <Ast.Global> globals = ast.getGlobals();
-        List <Ast.Function> functions = ast.getFunctions();
+        List<Ast.Global> globals = ast.getGlobals();
+        List<Ast.Function> functions = ast.getFunctions();
 
         for (Ast.Global global : globals) {
             visit(global);
@@ -39,14 +37,10 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
     @Override
     public Environment.PlcObject visit(Ast.Global ast) {
-        if (ast.getValue().isPresent())
-        {
+        if (ast.getValue().isPresent()) {
             Ast.Expression exp = ast.getValue().get();
             scope.defineVariable(ast.getName(), true, visit(exp));
-        }
-
-        else
-        {
+        } else {
             scope.defineVariable(ast.getName(), true, Environment.NIL);
         }
         return Environment.NIL;
@@ -54,8 +48,28 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
     @Override
     public Environment.PlcObject visit(Ast.Function ast) {
-        throw new UnsupportedOperationException(); //TODO
+        scope.defineFunction(ast.getName(), ast.getParameters().size(), arguments ->
+        {
+            try {
+                scope = new Scope(scope);
+                for (int i = 0; i < arguments.size(); i++) {
+                    scope.defineVariable(ast.getParameters().get(i), true, arguments.get(i));
+                }
+                for (int i = 0; i < ast.getStatements().size(); i++) {
+                    visit(ast.getStatements().get(i));
+                }
+            } catch (Return exception) {
+                return exception.value;
+            } finally {
+                scope = scope.getParent();
+            }
+            return Environment.NIL;
+        });
+        return Environment.NIL;
     }
+
+
+
 
     @Override
     public Environment.PlcObject visit(Ast.Statement.Expression ast) {
@@ -83,6 +97,22 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
         Ast.Expression receiver = ast.getReceiver();
         if (receiver instanceof Ast.Expression.Access){
             if (receiver != null) {
+                if (((Ast.Expression.Access) receiver).getOffset().isPresent()){
+                    Object offset = visit(((Ast.Expression.Access)receiver).getOffset().get()).getValue();
+
+                    if (offset.getClass().equals(BigInteger.class)) {
+                        Object list = scope.lookupVariable(((Ast.Expression.Access) receiver).getName()).getValue().getValue();
+
+                        if (list instanceof List){
+                            Object currVal = ((List<?>) list).get(((BigInteger) offset).intValue());
+                            //((List<?>) list).set(((BigInteger) offset).intValue(), visit(ast.getValue()));
+                        }
+                    } else {
+                        throw new RuntimeException();
+                    }
+
+
+                }
                 scope.lookupVariable(((Ast.Expression.Access) receiver).getName()).setValue(visit(ast.getValue()));
             }
         } else{
@@ -93,7 +123,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
     @Override
     public Environment.PlcObject visit(Ast.Statement.If ast) {
-        if (requireType(Boolean.class, visit(ast.getCondition()))){
+        if (requireType(Boolean.class, visit(ast.getCondition())) == true || requireType(Boolean.class, visit(ast.getCondition())) == false){
             try {
                 scope = new Scope(scope);
                 Ast.Expression condition = ast.getCondition();
@@ -318,7 +348,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
             }
         }
 
-        throw new UnsupportedOperationException(); //TODO
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -357,7 +387,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
     @Override
     public Environment.PlcObject visit(Ast.Expression.PlcList ast) {
         List<Ast.Expression> values = ast.getValues();
-        ArrayList newList = new ArrayList();
+        ArrayList<Object> newList = new ArrayList<>();
 
         for (int i = 0; i < values.size(); i++)
         {
