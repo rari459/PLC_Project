@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Finished visit ReturnExpression and GroupExpression">
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Finished visit StatementExp, Global">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Interpreter.java" afterDir="false" />
     </list>
@@ -62,8 +62,8 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.InterpreterTests.testGlobal">
-    <configuration name="InterpreterTests.testAccessExpression" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.InterpreterTests">
+    <configuration name="InterpreterTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -76,30 +76,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;plc.project.InterpreterTests.testAccessExpression&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="InterpreterTests.testBinaryExpression" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;plc.project.InterpreterTests.testBinaryExpression&quot;" />
+            <option value="&quot;plc.project.InterpreterTests&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -155,7 +132,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="InterpreterTests.testGroupExpression" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="InterpreterTests.testIfStatement" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -168,7 +145,30 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;plc.project.InterpreterTests.testGroupExpression&quot;" />
+            <option value="&quot;plc.project.InterpreterTests.testIfStatement&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="InterpreterTests.testVariableAssignmentStatement" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;plc.project.InterpreterTests.testVariableAssignmentStatement&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -193,11 +193,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.InterpreterTests" />
+        <item itemvalue="Gradle.InterpreterTests.testIfStatement" />
+        <item itemvalue="Gradle.InterpreterTests.testVariableAssignmentStatement" />
         <item itemvalue="Gradle.InterpreterTests.testGlobal" />
         <item itemvalue="Gradle.InterpreterTests.testDeclarationStatement" />
-        <item itemvalue="Gradle.InterpreterTests.testBinaryExpression" />
-        <item itemvalue="Gradle.InterpreterTests.testGroupExpression" />
-        <item itemvalue="Gradle.InterpreterTests.testAccessExpression" />
       </list>
     </recent_temporary>
   </component>
@@ -310,7 +310,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667229320882</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Finished visit StatementExp, Global">
+      <created>1667315378225</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1667315378225</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,7 +347,8 @@
     <MESSAGE value="Updated parseFunction to fix error in function tests" />
     <MESSAGE value="Finished visit FunctionExpression" />
     <MESSAGE value="Finished visit ReturnExpression and GroupExpression" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished visit ReturnExpression and GroupExpression" />
+    <MESSAGE value="Finished visit StatementExp, Global" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished visit StatementExp, Global" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -353,6 +361,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/HW1$InterpreterTests_testVariableAssignmentStatement.ic" NAME="InterpreterTests.testVariableAssignmentStatement Coverage Results" MODIFIED="1667319062686" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/HW1$ParserTests_testDeclarationStatement.ic" NAME="ParserTests.testDeclarationStatement Coverage Results" MODIFIED="1665759088992" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

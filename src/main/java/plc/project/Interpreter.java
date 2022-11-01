@@ -23,7 +23,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
     }
 
     @Override
-    public Environment.PlcObject visit(Ast.Source ast) { //COME BACK TO THIS
+    public Environment.PlcObject visit(Ast.Source ast) {
         List <Ast.Global> globals = ast.getGlobals();
         List <Ast.Function> functions = ast.getFunctions();
 
@@ -64,7 +64,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
     }
 
     @Override
-    public Environment.PlcObject visit(Ast.Statement.Declaration ast) {
+    public Environment.PlcObject visit(Ast.Statement.Declaration ast) {  //COME BACK TO THIS TOO
         if (ast.getValue().isPresent())
         {
             Ast.Expression exp = ast.getValue().get();
@@ -79,15 +79,12 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
     }
 
     @Override
-    public Environment.PlcObject visit(Ast.Statement.Assignment ast) {
+    public Environment.PlcObject visit(Ast.Statement.Assignment ast) {   /////ADD OFFSET FOR LISTS
         Ast.Expression receiver = ast.getReceiver();
         if (receiver instanceof Ast.Expression.Access){
-            if (receiver != null){
-
-            } else {
-
+            if (receiver != null) {
+                scope.lookupVariable(((Ast.Expression.Access) receiver).getName()).setValue(visit(ast.getValue()));
             }
-
         } else{
             throw new RuntimeException();
         }
@@ -96,8 +93,26 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
     @Override
     public Environment.PlcObject visit(Ast.Statement.If ast) {
+        if (requireType(Boolean.class, visit(ast.getCondition()))){
+            try {
+                scope = new Scope(scope);
+                Ast.Expression condition = ast.getCondition();
+                if ((Boolean)visit(condition).getValue() == true){
+                    for (int i = 0; i < ast.getThenStatements().size(); i++){
+                        visit(ast.getThenStatements().get(i));
+                    }
+                } else {
+                    for (int i = 0; i < ast.getElseStatements().size(); i++){
+                        visit(ast.getElseStatements().get(i));
+                    }
+                }
 
-        throw new UnsupportedOperationException(); //TODO
+            } finally {
+                scope = scope.getParent();
+            }
+        }
+
+        return Environment.NIL;
     }
 
     @Override
@@ -314,6 +329,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
             if (!offset.getClass().equals(BigInteger.class))
             {
+                throw new RuntimeException();
                 //throw exception
             }
             Object astVal = scope.lookupVariable(ast.getName()).getValue().getValue();
