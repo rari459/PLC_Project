@@ -104,8 +104,8 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                         Object list = scope.lookupVariable(((Ast.Expression.Access) receiver).getName()).getValue().getValue();
 
                         if (list instanceof List){
-                            Object currVal = ((List<?>) list).get(((BigInteger) offset).intValue());
-                            //((List<?>) list).set(((BigInteger) offset).intValue(), visit(ast.getValue()));
+                            ((List<BigInteger>) list).set(((BigInteger) offset).intValue(), (BigInteger) visit(ast.getValue()).getValue());
+                            return Environment.NIL;
                         }
                     } else {
                         throw new RuntimeException();
@@ -147,14 +147,24 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
     @Override
     public Environment.PlcObject visit(Ast.Statement.Switch ast) {
-        throw new UnsupportedOperationException(); //TODO
+
+        for (Ast.Statement.Case s : ast.getCases()) {
+            if (s.getValue().isPresent() && visit(s.getValue().get()).getValue().equals(visit(ast.getCondition()).getValue()))
+            {
+                return visit(s);
+            }
+        }
+        return visit(ast.getCases().get(ast.getCases().size() - 1));
     }
 
     @Override
     public Environment.PlcObject visit(Ast.Statement.Case ast) {
-        Ast.Expression val = ast.getValue().get();
-
-        throw new UnsupportedOperationException(); //TODO
+        scope = new Scope(scope);
+        for (int i = 0; i < ast.getStatements().size(); i++){
+            visit(ast.getStatements().get(i));
+        }
+        scope = scope.getParent();
+        return Environment.NIL;
     }
 
     @Override
