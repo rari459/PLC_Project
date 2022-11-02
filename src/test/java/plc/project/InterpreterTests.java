@@ -370,6 +370,13 @@ final class InterpreterTests {
                                 new Ast.Expression.Literal(new BigDecimal("3.4"))
                         ),
                         new BigDecimal("0.4")
+                ),
+                Arguments.of("Exponent",
+                        new Ast.Expression.Binary("^",
+                                new Ast.Expression.Literal(new BigInteger("5")),
+                                new Ast.Expression.Literal(new BigInteger("10"))
+                        ),
+                        new BigInteger("9765625")
                 )
         );
     }

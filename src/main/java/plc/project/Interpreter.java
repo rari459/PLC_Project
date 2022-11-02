@@ -288,6 +288,34 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
         }
         else if (operator == "^"){
             //COME BACK TO THIS *************************************************
+            if (lhs.getValue() instanceof BigInteger){
+                Environment.PlcObject rhs = visit(ast.getRight());
+                if ((rhs.getValue() instanceof BigInteger)) {
+                    if (((BigInteger) rhs.getValue()).intValue() > 0) {
+                        BigInteger temp = requireType(BigInteger.class, lhs);
+
+                        for (int i = 0; i < requireType(BigInteger.class, rhs).intValue() - 1; i++) {
+                            temp = temp.multiply(requireType(BigInteger.class, lhs));
+                        }
+
+                        return Environment.create(temp);
+                    } else if (((BigInteger) rhs.getValue()).intValue() < 0) {
+                        BigInteger temp = BigInteger.ONE;
+
+                        for (int i = 0; i < requireType(BigInteger.class, rhs).intValue(); i++) {
+                            temp = temp.divide(requireType(BigInteger.class, lhs));
+                        }
+
+                        return Environment.create(temp);
+                    } else {
+                        return Environment.create(BigInteger.ONE);
+                    }
+
+                }
+                else{
+                    throw new RuntimeException();
+                }
+            }
         }
         else if (operator == "=="){
             Environment.PlcObject rhs = visit(ast.getRight());

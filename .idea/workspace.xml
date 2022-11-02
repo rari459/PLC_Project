@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="4 more failing tests, started work on offset and function">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Fixed Binary, all tests pass except for while statement">
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/InterpreterTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/InterpreterTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +62,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.InterpreterTests">
+  <component name="RunManager" selected="Gradle.InterpreterTests.testBinaryExpression">
     <configuration name="InterpreterTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -86,7 +86,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="InterpreterTests.testDeclarationStatement" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="InterpreterTests.testBinaryExpression" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -99,7 +99,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;plc.project.InterpreterTests.testDeclarationStatement&quot;" />
+            <option value="&quot;plc.project.InterpreterTests.testBinaryExpression&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -193,11 +193,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.InterpreterTests.testBinaryExpression" />
         <item itemvalue="Gradle.InterpreterTests" />
         <item itemvalue="Gradle.InterpreterTests.testListAssignmentStatement" />
         <item itemvalue="Gradle.InterpreterTests.testIfStatement" />
         <item itemvalue="Gradle.InterpreterTests.testFunction" />
-        <item itemvalue="Gradle.InterpreterTests.testDeclarationStatement" />
       </list>
     </recent_temporary>
   </component>
@@ -331,7 +331,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667340991290</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Fixed Binary, all tests pass except for while statement">
+      <created>1667400504735</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1667400504735</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -364,7 +371,8 @@
     <MESSAGE value="Finished visit StatementExp, Global" />
     <MESSAGE value="Finished Statement Assignment" />
     <MESSAGE value="4 more failing tests, started work on offset and function" />
-    <option name="LAST_COMMIT_MESSAGE" value="4 more failing tests, started work on offset and function" />
+    <MESSAGE value="Fixed Binary, all tests pass except for while statement" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Binary, all tests pass except for while statement" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -373,11 +381,6 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="8" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/plc/project/Interpreter.java</url>
-          <line>97</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
