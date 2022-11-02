@@ -2,6 +2,7 @@ package plc.project;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.*;
 
 public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
@@ -279,7 +280,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
             else if (lhs.getValue() instanceof BigDecimal) {
                 Environment.PlcObject rhs = visit(ast.getRight());
                 if ((rhs.getValue() instanceof BigDecimal) && (((BigDecimal) rhs.getValue()).doubleValue() != 0)) {
-                    return Environment.create(requireType(BigDecimal.class, lhs).divide(requireType(BigDecimal.class, rhs)));
+                    return Environment.create(requireType(BigDecimal.class, lhs).divide(requireType(BigDecimal.class, rhs), RoundingMode.HALF_EVEN));
                 } else {
                     throw new RuntimeException();
                 }

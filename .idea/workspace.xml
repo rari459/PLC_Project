@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Updated parseBlock to fix error in switchStatement tests">
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="4 more failing tests, started work on offset and function">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Interpreter.java" afterDir="false" />
     </list>
@@ -155,7 +155,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="InterpreterTests.testVariableAssignmentStatement" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="InterpreterTests.testListAssignmentStatement" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -168,7 +168,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;plc.project.InterpreterTests.testVariableAssignmentStatement&quot;" />
+            <option value="&quot;plc.project.InterpreterTests.testListAssignmentStatement&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -194,10 +194,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.InterpreterTests" />
+        <item itemvalue="Gradle.InterpreterTests.testListAssignmentStatement" />
         <item itemvalue="Gradle.InterpreterTests.testIfStatement" />
         <item itemvalue="Gradle.InterpreterTests.testFunction" />
         <item itemvalue="Gradle.InterpreterTests.testDeclarationStatement" />
-        <item itemvalue="Gradle.InterpreterTests.testVariableAssignmentStatement" />
       </list>
     </recent_temporary>
   </component>
@@ -324,7 +324,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667321437937</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="4 more failing tests, started work on offset and function">
+      <created>1667340991290</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1667340991290</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -356,7 +363,8 @@
     <MESSAGE value="Finished visit ReturnExpression and GroupExpression" />
     <MESSAGE value="Finished visit StatementExp, Global" />
     <MESSAGE value="Finished Statement Assignment" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished Statement Assignment" />
+    <MESSAGE value="4 more failing tests, started work on offset and function" />
+    <option name="LAST_COMMIT_MESSAGE" value="4 more failing tests, started work on offset and function" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -365,6 +373,11 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="8" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/plc/project/Interpreter.java</url>
+          <line>97</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
