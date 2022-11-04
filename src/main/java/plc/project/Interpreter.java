@@ -94,7 +94,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
     }
 
     @Override
-    public Environment.PlcObject visit(Ast.Statement.Assignment ast) {   /////ADD OFFSET FOR LISTS
+    public Environment.PlcObject visit(Ast.Statement.Assignment ast) {
         Ast.Expression receiver = ast.getReceiver();
         if (receiver instanceof Ast.Expression.Access){
             if (receiver != null) {
@@ -214,8 +214,22 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
         Environment.PlcObject lhs = visit(ast.getLeft());
 
         if (operator == "+"){
-            if (lhs.getValue() instanceof BigInteger){
-                Environment.PlcObject rhs = visit(ast.getRight());
+            Environment.PlcObject rhs = visit(ast.getRight());
+            if (lhs.getValue() instanceof String || rhs.getValue() instanceof String){
+                if (lhs.getValue() instanceof String && rhs.getValue() instanceof String){
+                    return Environment.create(requireType(String.class, lhs) + (requireType(String.class, rhs)));
+                }
+                if (lhs.getValue() instanceof String && (rhs.getValue() instanceof BigInteger || rhs.getValue() instanceof BigDecimal)){
+                    return Environment.create(requireType(String.class, lhs) + rhs.getValue());
+                }
+                if (rhs.getValue() instanceof String && (lhs.getValue() instanceof BigInteger || lhs.getValue() instanceof BigDecimal)){
+                    return Environment.create(lhs.getValue() + (requireType(String.class, rhs)));
+                }
+                else{
+                    throw new RuntimeException();
+                }
+            }
+            else if (lhs.getValue() instanceof BigInteger){
                 if (rhs.getValue() instanceof BigInteger){
                     return Environment.create(requireType(BigInteger.class, lhs).add(requireType(BigInteger.class, rhs)));
                 }
@@ -224,7 +238,6 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                 }
             }
             else if (lhs.getValue() instanceof BigDecimal){
-                Environment.PlcObject rhs = visit(ast.getRight());
                 if (rhs.getValue() instanceof BigDecimal){
                     return Environment.create(requireType(BigDecimal.class, lhs).add(requireType(BigDecimal.class, rhs)));
                 }
@@ -232,15 +245,10 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                     throw new RuntimeException();
                 }
             }
-            else if (lhs.getValue() instanceof String){
-                Environment.PlcObject rhs = visit(ast.getRight());
-                if (rhs.getValue() instanceof String){
-                    return Environment.create(requireType(String.class, lhs) + (requireType(String.class, rhs)));
-                }
-                else{
-                    throw new RuntimeException();
-                }
+            else {
+                throw new RuntimeException();
             }
+
         }
         else if (operator == "-"){
             if (lhs.getValue() instanceof BigInteger){
@@ -259,6 +267,8 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                 } else {
                     throw new RuntimeException();
                 }
+            } else {
+                throw new RuntimeException();
             }
         } else if (operator == "*"){
             if (lhs.getValue() instanceof BigInteger){
@@ -277,6 +287,8 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                 } else {
                     throw new RuntimeException();
                 }
+            } else {
+                throw new RuntimeException();
             }
         }
         else if (operator == "/"){
@@ -296,10 +308,11 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                 } else {
                     throw new RuntimeException();
                 }
+            } else {
+                throw new RuntimeException();
             }
         }
         else if (operator == "^"){
-            //COME BACK TO THIS *************************************************
             if (lhs.getValue() instanceof BigInteger){
                 Environment.PlcObject rhs = visit(ast.getRight());
                 if ((rhs.getValue() instanceof BigInteger)) {
@@ -327,6 +340,8 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                 else{
                     throw new RuntimeException();
                 }
+            } else {
+                throw new RuntimeException();
             }
         }
         else if (operator == "=="){
@@ -358,6 +373,8 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                 } else {
                     throw new RuntimeException();
                 }
+            } else {
+                throw new RuntimeException();
             }
         } else if (operator  == "&&"){
             if (lhs.getValue() instanceof Boolean ){
@@ -374,6 +391,8 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                 } else {
                     throw new RuntimeException();
                 }
+            } else {
+                throw new RuntimeException();
             }
         } else if (operator  == ">"){
             if (lhs.getValue() instanceof Comparable ) {
@@ -385,6 +404,8 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                 else {
                     throw new RuntimeException();
                 }
+            } else {
+                throw new RuntimeException();
             }
         } else if (operator  == "<"){
             if (lhs.getValue() instanceof Comparable ) {
@@ -396,6 +417,8 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                 else {
                     throw new RuntimeException();
                 }
+            } else {
+                throw new RuntimeException();
             }
         }
 

@@ -343,17 +343,17 @@ final class InterpreterTests {
                 Arguments.of("Equal",
                         new Ast.Expression.Binary("==",
                                 new Ast.Expression.Literal(BigInteger.ONE),
-                                new Ast.Expression.Literal(BigInteger.TEN)
+                                new Ast.Expression.Literal("a")
                         ),
                         false
                 ),
-                // "a" + "b"
+                // 1 + "BigInteger.TEN"
                 Arguments.of("Concatenation",
                         new Ast.Expression.Binary("+",
-                                new Ast.Expression.Literal("a"),
-                                new Ast.Expression.Literal("b")
+                                new Ast.Expression.Literal(BigDecimal.ONE),
+                                new Ast.Expression.Literal("BigInteger.TEN")
                         ),
-                        "ab"
+                        "1BigInteger.TEN"
                 ),
                 // 1 + 10
                 Arguments.of("Addition",
