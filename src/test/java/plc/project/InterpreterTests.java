@@ -62,6 +62,9 @@ final class InterpreterTests {
                 Arguments.of("Mutable", new Ast.Global("name", true, Optional.empty()), Environment.NIL.getValue()),
                 // VAL name = 1;
                 Arguments.of("Immutable", new Ast.Global("name", false, Optional.of(new Ast.Expression.Literal(BigInteger.ONE))), BigInteger.ONE)
+                //LIST arr = [1, 2, 3];
+
+
         );
     }
 
@@ -377,6 +380,13 @@ final class InterpreterTests {
                                 new Ast.Expression.Literal(new BigInteger("10"))
                         ),
                         new BigInteger("9765625")
+                ),
+                Arguments.of("Last Test",
+                        new Ast.Expression.Binary("^",
+                                new Ast.Expression.Literal(BigDecimal.TEN),
+                                new Ast.Expression.Literal(BigDecimal.ONE)
+                        ),
+                        true
                 )
         );
     }
