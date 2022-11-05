@@ -422,7 +422,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
             }
         }
 
-        throw new UnsupportedOperationException();
+        throw new RuntimeException("Unsupported Binary Operation");
     }
 
     @Override

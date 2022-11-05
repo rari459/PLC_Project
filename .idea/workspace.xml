@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Added Power Operator to the Binary Visit Function and added an Exponent Test">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Fixed Unsupported Operator">
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Interpreter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/InterpreterTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/InterpreterTests.java" afterDir="false" />
     </list>
@@ -346,7 +345,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667401860758</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Fixed Unsupported Operator">
+      <created>1667526970211</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1667526970211</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -381,7 +387,8 @@
     <MESSAGE value="4 more failing tests, started work on offset and function" />
     <MESSAGE value="Fixed Binary, all tests pass except for while statement" />
     <MESSAGE value="Added Power Operator to the Binary Visit Function and added an Exponent Test" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Power Operator to the Binary Visit Function and added an Exponent Test" />
+    <MESSAGE value="Fixed Unsupported Operator" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Unsupported Operator" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
