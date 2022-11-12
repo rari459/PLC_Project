@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Fixed Unsupported Operator">
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="WorkSpace">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Ast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Ast.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Environment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Scope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Scope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/InterpreterTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/InterpreterTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/ParserTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/ParserTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Analyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Analyzer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +62,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.AnalyzerTests.testAccessExpression">
+  <component name="RunManager" selected="Gradle.AnalyzerTests.testBinaryExpression">
     <configuration name="AnalyzerTests.testAccessExpression" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -81,6 +77,52 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;plc.project.AnalyzerTests.testAccessExpression&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="AnalyzerTests.testBinaryExpression" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;plc.project.AnalyzerTests.testBinaryExpression&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="AnalyzerTests.testLiteralExpression" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;plc.project.AnalyzerTests.testLiteralExpression&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -113,29 +155,6 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="InterpreterTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;plc.project.InterpreterTests&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="InterpreterTests.testBinaryExpression" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -150,29 +169,6 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;plc.project.InterpreterTests.testBinaryExpression&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="InterpreterTests.testListAssignmentStatement" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;plc.project.InterpreterTests.testListAssignmentStatement&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -197,11 +193,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.AnalyzerTests.testBinaryExpression" />
+        <item itemvalue="Gradle.AnalyzerTests.testLiteralExpression" />
         <item itemvalue="Gradle.AnalyzerTests.testAccessExpression" />
         <item itemvalue="Gradle.AnalyzerTests.testRequireAssignable" />
         <item itemvalue="Gradle.InterpreterTests.testBinaryExpression" />
-        <item itemvalue="Gradle.InterpreterTests" />
-        <item itemvalue="Gradle.InterpreterTests.testListAssignmentStatement" />
       </list>
     </recent_temporary>
   </component>
@@ -356,7 +352,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667526970211</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Fixed Unsupported Operator">
+      <created>1668273451288</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1668273451288</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,8 +394,10 @@
     <MESSAGE value="4 more failing tests, started work on offset and function" />
     <MESSAGE value="Fixed Binary, all tests pass except for while statement" />
     <MESSAGE value="Added Power Operator to the Binary Visit Function and added an Exponent Test" />
+    <MESSAGE value="Require Assignable and Expression Access Done" />
     <MESSAGE value="Fixed Unsupported Operator" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Unsupported Operator" />
+    <MESSAGE value="WorkSpace" />
+    <option name="LAST_COMMIT_MESSAGE" value="WorkSpace" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

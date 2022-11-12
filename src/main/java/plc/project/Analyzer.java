@@ -81,7 +81,37 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Expression.Literal ast) {
-        throw new UnsupportedOperationException();  // TODO
+        Object l = ast.getLiteral();
+
+        if (l == Environment.NIL){
+            ast.setType(Environment.Type.NIL);
+        } else if (l instanceof Boolean) {
+            ast.setType(Environment.Type.BOOLEAN);
+        } else if (l instanceof Character) {
+            ast.setType(Environment.Type.CHARACTER);
+        } else if (l instanceof String) {
+            ast.setType(Environment.Type.STRING);
+        } else if (l instanceof BigInteger){
+            BigInteger number = (BigInteger) l;
+
+            if (number.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) <= 0 &&
+                    number.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) >= 0){
+                ast.setType(Environment.Type.INTEGER);
+            } else {
+                throw new RuntimeException("Integer Overflow");
+            }
+        } else if (l instanceof BigDecimal){
+            BigDecimal number = (BigDecimal) l;
+
+            if (number.compareTo(BigDecimal.valueOf(Double.MAX_VALUE)) <= 0 &&
+                    number.compareTo(BigDecimal.valueOf(Double.MIN_VALUE)) >= 0){
+                ast.setType(Environment.Type.DECIMAL);
+            } else {
+                throw new RuntimeException("Decimal Overflow");
+            }
+        }
+        return null;
+
     }
 
     @Override
@@ -91,7 +121,57 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Expression.Binary ast) {
-        throw new UnsupportedOperationException();  // TODO
+        Ast.Expression l = ast.getLeft();
+        Ast.Expression r = ast.getRight();
+        visit(l);
+        visit(r);
+
+        String operator = ast.getOperator();
+
+        if (operator == "&&" || operator == "||") {
+            requireAssignable(Environment.Type.BOOLEAN, l.getType());
+            requireAssignable(Environment.Type.BOOLEAN, r.getType());
+            ast.setType(Environment.Type.BOOLEAN);
+        } else if (operator == "<" || operator == ">" || operator == "==" || operator == "!="){
+            requireAssignable(Environment.Type.COMPARABLE, l.getType());
+            requireAssignable(Environment.Type.COMPARABLE, r.getType());
+            ast.setType(Environment.Type.BOOLEAN);
+        } else if (operator == "+"){
+            if (l.getType().getName() == "String" || r.getType().getName() == "String"){
+                ast.setType(Environment.Type.STRING);
+            } else if (l.getType().getName() == "Integer"){
+                requireAssignable(l.getType(), r.getType());
+                ast.setType(Environment.Type.INTEGER);
+            }
+            else if (l.getType().getName() == "Decimal"){
+                requireAssignable(l.getType(), r.getType());
+                ast.setType(Environment.Type.DECIMAL);
+            } else {
+                throw new RuntimeException("Invalid Type for +");
+            }
+        } else if (operator == "*" ||operator == "/" || operator == "-"){
+            if (l.getType().getName() == "Integer"){
+                requireAssignable(l.getType(), r.getType());
+                ast.setType(Environment.Type.INTEGER);
+            }
+            else if (l.getType().getName() == "Decimal"){
+                requireAssignable(l.getType(), r.getType());
+                ast.setType(Environment.Type.DECIMAL);
+            } else {
+                throw new RuntimeException("Invalid Type for */-");
+            }
+        } else if (operator == "^"){
+            if (l.getType().getName() == "Integer"){
+                requireAssignable(l.getType(), r.getType());
+                ast.setType(Environment.Type.INTEGER);
+            }
+            else {
+                throw new RuntimeException("Invalid Type for ^");
+            }
+        }
+
+
+        return null;
     }
 
     @Override
