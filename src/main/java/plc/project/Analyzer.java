@@ -41,22 +41,82 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Statement.Expression ast) {
-        throw new UnsupportedOperationException();  // TODO
+        visit(ast.getExpression());
+
+        if (!(ast.getExpression() instanceof Ast.Expression.Function)){
+            throw new RuntimeException("Need Expression.Function");
+        }
+        return null;
     }
 
     @Override
     public Void visit(Ast.Statement.Declaration ast) {
-        throw new UnsupportedOperationException();  // TODO
+        String name = ast.getName();
+        if (!(ast.getValue().isPresent()) && !(ast.getTypeName().isPresent())){
+            throw new RuntimeException("No value or type found in declaration");
+        }
+        Environment.Type type = null;
+        if (ast.getTypeName().isPresent()){
+            type = Environment.getType(ast.getTypeName().get());
+        }
+        if (ast.getValue().isPresent()){
+            visit(ast.getValue().get());
+
+            if (type != null){
+                requireAssignable(ast.getValue().get().getType(), Environment.getType(ast.getTypeName().get()));
+            } else {
+                type = ast.getValue().get().getType();
+            }
+
+            requireAssignable(ast.getValue().get().getType(), type);
+
+        }
+
+        ast.setVariable(scope.defineVariable(name, name,type, true, Environment.NIL));
+
+        return null;
+
     }
 
     @Override
     public Void visit(Ast.Statement.Assignment ast) {
-        throw new UnsupportedOperationException();  // TODO
+        if (!(ast.getReceiver() instanceof Ast.Expression.Access)){
+            throw new RuntimeException("Need receiver to be Expression.Access");
+        }
+        visit(ast.getValue());
+        visit(ast.getReceiver());
+        requireAssignable(ast.getReceiver().getType(), ast.getValue().getType());
+
+        return null;
     }
 
     @Override
     public Void visit(Ast.Statement.If ast) {
-        throw new UnsupportedOperationException();  // TODO
+        visit(ast.getCondition());
+        requireAssignable(Environment.Type.BOOLEAN, ast.getCondition().getType());
+
+        if (ast.getThenStatements().size() > 0){
+            for (int i = 0; i < ast.getThenStatements().size(); i++){
+                try {
+                    scope = new Scope(scope);
+                    visit(ast.getThenStatements().get(i));
+                } finally {
+                    scope = scope.getParent();
+                }
+            }
+            for (int i = 0; i < ast.getElseStatements().size(); i++){
+                try {
+                    scope = new Scope(scope);
+                    visit(ast.getElseStatements().get(i));
+                } finally {
+                    scope = scope.getParent();
+                }
+            }
+            return null;
+        }
+
+        throw new RuntimeException("Empty then list for If-Statement");
+
     }
 
     @Override
@@ -66,6 +126,12 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Statement.Case ast) {
+        scope = new Scope(scope);
+
+        for (int i = 0; i < ast.getStatements().size(); i++){
+            visit(ast.getStatements().get(i));
+        }
+
         throw new UnsupportedOperationException();  // TODO
     }
 
@@ -215,7 +281,6 @@ public final class Analyzer implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Expression.Function ast) {
         Environment.Function f = scope.lookupFunction(ast.getName(), ast.getArguments().size());
-
 
         List<Environment.Type> types = f.getParameterTypes();
         for (int i = 0; i < ast.getArguments().size(); i++){
