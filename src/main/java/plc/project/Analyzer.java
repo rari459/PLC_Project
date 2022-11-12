@@ -71,12 +71,28 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Statement.While ast) {
-        throw new UnsupportedOperationException();  // TODO
+        Ast.Expression condition = ast.getCondition();
+
+        if (condition.getType() == Environment.Type.BOOLEAN){
+            scope = new Scope(scope);
+
+            for (int i = 0; i < ast.getStatements().size(); i++){
+                visit(ast.getStatements().get(i));
+            }
+
+            return null;
+        }
+
+        throw new RuntimeException("Non boolean condition");
+
+
     }
 
     @Override
     public Void visit(Ast.Statement.Return ast) {
-        throw new UnsupportedOperationException();  // TODO
+        //requireAssignable(ast.getValue().getType(), returnType.get)
+        throw new UnsupportedOperationException();
+
     }
 
     @Override
@@ -116,7 +132,14 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Expression.Group ast) {
-        throw new UnsupportedOperationException();  // TODO
+        Ast.Expression expr = ast.getExpression();
+
+        if (expr instanceof Ast.Expression.Binary){
+            visit(expr);
+            ast.setType(ast.getExpression().getType());
+            return null;
+        }
+        throw new RuntimeException("Invalid Group Expression, not Binary");
     }
 
     @Override
@@ -191,9 +214,19 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Expression.Function ast) {
+        Environment.Function f = scope.lookupFunction(ast.getName(), ast.getArguments().size());
 
 
-        throw new UnsupportedOperationException();  // TODO
+        List<Environment.Type> types = f.getParameterTypes();
+        for (int i = 0; i < ast.getArguments().size(); i++){
+            visit(ast.getArguments().get(i));
+            requireAssignable(ast.getArguments().get(i).getType(), types.get(i));
+        }
+
+        ast.setFunction(f);
+
+        return null;
+
     }
 
     @Override
@@ -221,7 +254,7 @@ public final class Analyzer implements Ast.Visitor<Void> {
                 }
             }
         }
-        throw new RuntimeException("Mimatched Type Assignment");
+        throw new RuntimeException("Mismatched Type Assignment");
     }
 
 }
