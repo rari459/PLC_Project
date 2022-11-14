@@ -145,13 +145,11 @@ public final class Analyzer implements Ast.Visitor<Void> {
             for (int i = 0; i < ast.getStatements().size(); i++){
                 visit(ast.getStatements().get(i));
             }
-
+            scope = scope.getParent();
             return null;
         }
 
         throw new RuntimeException("Non boolean condition");
-
-
     }
 
     @Override
