@@ -83,12 +83,15 @@ public final class Parser {
     public Ast.Global parseList() throws ParseException {
         try
         {
-            if (!peek(Token.Type.IDENTIFIER, "=", "["))
+            if (!peek(Token.Type.IDENTIFIER, ":", Token.Type.IDENTIFIER, "=", "["))
             {
                 throw new ParseException("Invalid List Statement", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
             }
             String name = tokens.get(0).getLiteral();
+            match(Token.Type.IDENTIFIER, ":");
+            String typeName = tokens.get(0).getLiteral();
             match(Token.Type.IDENTIFIER, "=", "[");
+
 
             Ast.Expression expr1 = parseExpression();
             List<Ast.Expression> expressions = new ArrayList<>();
@@ -103,7 +106,7 @@ public final class Parser {
             if (match("]")) {
                 if (match(";"))
                 {
-                    return new Ast.Global(name, true, Optional.of(new Ast.Expression.PlcList(expressions)));
+                    return new Ast.Global(name, typeName, true, Optional.of(new Ast.Expression.PlcList(expressions)));
                 }
                 else
                 {
@@ -126,11 +129,13 @@ public final class Parser {
     public Ast.Global parseMutable() throws ParseException {
         try
         {
-            if (!peek(Token.Type.IDENTIFIER))
+            if (!peek(Token.Type.IDENTIFIER, ":", Token.Type.IDENTIFIER))
             {
-                throw new ParseException("Invalid List Statement", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                throw new ParseException("Invalid Mutable Statement", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
             }
             String name = tokens.get(0).getLiteral();
+            match(Token.Type.IDENTIFIER, ":");
+            String typeName = tokens.get(0).getLiteral();
             match(Token.Type.IDENTIFIER);
 
             Ast.Expression expr = null;
@@ -144,7 +149,7 @@ public final class Parser {
                 throw new ParseException("Missing Semicolon", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
             }
 
-                return new Ast.Global(name, true, Optional.ofNullable(expr));
+                return new Ast.Global(name, typeName, true, Optional.ofNullable(expr));
         } catch (ParseException e){
             throw new ParseException(e.getMessage(), e.getIndex());
         }
@@ -157,11 +162,13 @@ public final class Parser {
     public Ast.Global parseImmutable() throws ParseException {
         try
         {
-            if (!peek(Token.Type.IDENTIFIER))
+            if (!peek(Token.Type.IDENTIFIER, ":", Token.Type.IDENTIFIER))
             {
-                throw new ParseException("Invalid List Statement", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                throw new ParseException("Invalid Immutable Statement", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
             }
             String name = tokens.get(0).getLiteral();
+            match(Token.Type.IDENTIFIER, ":");
+            String typeName = tokens.get(0).getLiteral();
             match(Token.Type.IDENTIFIER);
 
 
@@ -178,7 +185,7 @@ public final class Parser {
             }
             else
             {
-                return new Ast.Global(name, false, Optional.of(expr));
+                return new Ast.Global(name, typeName, false, Optional.of(expr));
             }
         } catch (ParseException e){
             throw new ParseException(e.getMessage(), e.getIndex());
@@ -198,10 +205,13 @@ public final class Parser {
 
                 if (match("(")){
                     List<String> func = new ArrayList<>();
+                    List<String> paramTypes = new ArrayList<>();
 
                     if (match(Token.Type.IDENTIFIER))
                     {
                         func.add(tokens.get(-1).getLiteral());
+                        match(":", Token.Type.IDENTIFIER);
+                        paramTypes.add(tokens.get(-1).getLiteral());
                     }
                     while (match(","))
                     {
@@ -210,10 +220,17 @@ public final class Parser {
                             throw new ParseException("Trailing Comma", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
                         }
                         func.add(tokens.get(-1).getLiteral());
+                        match(":", Token.Type.IDENTIFIER);
+                        paramTypes.add(tokens.get(-1).getLiteral());
                     }
 
                     List<Ast.Statement> exp = new ArrayList<>();
+                    String returnType = "";
                     if (match(")")){
+                        if (match("(", ":", Token.Type.IDENTIFIER, ")"))
+                        {
+                            returnType = tokens.get(-2).getLiteral();
+                        }
                         if (!match("DO")){
                             throw new ParseException("Expected DO", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
                         }
@@ -225,7 +242,7 @@ public final class Parser {
                     } else {
                         throw new ParseException("Missing Parenthesis", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
                     }
-                    return new Ast.Function(name, func, exp);
+                    return new Ast.Function(name, func, paramTypes, Optional.of(returnType), exp);
 
                 } else {
                     throw new ParseException("Missing Parenthesis", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
@@ -336,6 +353,12 @@ public final class Parser {
             String name = tokens.get(0).getLiteral();
             match(Token.Type.IDENTIFIER);
 
+            String typeName = "";
+            if (match("(", ":", Token.Type.IDENTIFIER, ")"))
+            {
+                typeName = tokens.get(-2).getLiteral();
+            }
+
             Ast.Expression expr = null;
 
             if (match("="))
@@ -348,7 +371,7 @@ public final class Parser {
                 throw new ParseException("Missing Semicolon", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
             }
 
-            return new Ast.Statement.Declaration(name, Optional.ofNullable(expr));
+            return new Ast.Statement.Declaration(name, Optional.of(typeName), Optional.ofNullable(expr));
         } catch (ParseException e){
             throw new ParseException(e.getMessage(), e.getIndex());
         }
