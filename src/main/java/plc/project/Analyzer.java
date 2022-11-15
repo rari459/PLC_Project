@@ -169,7 +169,27 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Statement.Switch ast) {
-        throw new UnsupportedOperationException();  // TODO
+        visit(ast.getCondition());
+
+        Environment.Type conditionType = ast.getCondition().getType();
+        int numberofCases = ast.getCases().size();
+        for (int i = 0; i < numberofCases; i++){
+                if (ast.getCases().get(i).getValue().isPresent()){
+                    if (i == numberofCases - 1){
+                        throw new RuntimeException("Default case has value");
+                    }
+                    visit(ast.getCases().get(i).getValue().get());
+                    requireAssignable(conditionType, ast.getCases().get(i).getValue().get().getType());
+                }
+
+                try {
+                    scope = new Scope(scope);
+                    visit(ast.getCases().get(i));
+                } finally {
+                    scope = scope.getParent();
+                }
+        }
+        return null;
     }
 
     @Override
@@ -180,7 +200,7 @@ public final class Analyzer implements Ast.Visitor<Void> {
             visit(ast.getStatements().get(i));
         }
 
-        throw new UnsupportedOperationException();  // TODO
+        return null;
     }
 
     @Override
