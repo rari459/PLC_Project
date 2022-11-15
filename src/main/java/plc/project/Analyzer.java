@@ -2,6 +2,7 @@ package plc.project;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,12 +32,60 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Global ast) {
-        throw new UnsupportedOperationException();  // TODO
+        String name = ast.getName();
+        if (ast.getValue().isPresent()){
+            Environment.Type globalType = Environment.getType(ast.getTypeName());
+            Ast.Expression val = ast.getValue().get();
+
+            requireAssignable(val.getType(), globalType);
+
+            visit(ast.getValue().get());
+        }
+
+        scope.defineVariable(name, name, Environment.getType(ast.getTypeName()), true, Environment.NIL);
+        ast.setVariable(scope.lookupVariable(name));
+
+        return null;
     }
 
     @Override
     public Void visit(Ast.Function ast) {
-        throw new UnsupportedOperationException();  // TODO
+        String name = ast.getName();
+
+        List<Environment.Type> params = new ArrayList<>();
+
+        for (int i = 0; i < ast.getParameters().size(); i++){
+            params.add(Environment.getType(ast.getParameters().get(i)));
+        }
+
+        Environment.Type functionReturn = Environment.NIL.getType();
+
+        if (ast.getReturnTypeName().isPresent()){
+            functionReturn = Environment.getType(ast.getReturnTypeName().get());
+        }
+
+        scope.defineVariable("functionReturn", "functionReturn", functionReturn, true, Environment.NIL);
+
+        scope.defineFunction(name, name, params, functionReturn, args -> Environment.NIL);
+
+        try{
+            scope = new Scope(scope);
+            for (int i = 0; i < ast.getParameters().size(); i++){
+                String paramName = ast.getParameters().get(i);
+                scope.defineVariable(paramName, paramName, params.get(i), true, Environment.NIL);
+            }
+
+            for (int i = 0; i < ast.getStatements().size(); i++){
+                visit(ast.getStatements().get(i));
+            }
+
+            ast.setFunction(scope.lookupFunction(ast.getName(), ast.getParameters().size()));
+        } finally {
+            scope = scope.getParent();
+        }
+
+
+        return null;
     }
 
     @Override
@@ -95,28 +144,27 @@ public final class Analyzer implements Ast.Visitor<Void> {
         visit(ast.getCondition());
         requireAssignable(Environment.Type.BOOLEAN, ast.getCondition().getType());
 
-        if (ast.getThenStatements().size() > 0){
-            for (int i = 0; i < ast.getThenStatements().size(); i++){
-                try {
-                    scope = new Scope(scope);
-                    visit(ast.getThenStatements().get(i));
-                } finally {
-                    scope = scope.getParent();
-                }
-            }
-            for (int i = 0; i < ast.getElseStatements().size(); i++){
-                try {
-                    scope = new Scope(scope);
-                    visit(ast.getElseStatements().get(i));
-                } finally {
-                    scope = scope.getParent();
-                }
-            }
-            return null;
+        if (!(ast.getThenStatements().size() > 0)){
+            throw new RuntimeException("Empty then list for If-Statement");
         }
 
-        throw new RuntimeException("Empty then list for If-Statement");
-
+        for (int i = 0; i < ast.getThenStatements().size(); i++){
+            try {
+                scope = new Scope(scope);
+                visit(ast.getThenStatements().get(i));
+            } finally {
+                scope = scope.getParent();
+            }
+        }
+        for (int i = 0; i < ast.getElseStatements().size(); i++){
+            try {
+                scope = new Scope(scope);
+                visit(ast.getElseStatements().get(i));
+            } finally {
+                scope = scope.getParent();
+            }
+        }
+        return null;
     }
 
     @Override
@@ -154,9 +202,11 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Statement.Return ast) {
-        //requireAssignable(ast.getValue().getType(), returnType.get)
-        throw new UnsupportedOperationException();
+        visit(ast.getValue());
+        Environment.Variable returnVar = scope.lookupVariable("functionReturn");
+        requireAssignable(ast.getValue().getType(), returnVar.getType());
 
+        return null;
     }
 
     @Override
@@ -277,13 +327,13 @@ public final class Analyzer implements Ast.Visitor<Void> {
     }
 
     @Override
-    public Void visit(Ast.Expression.Function ast) {
+    public Void visit(Ast.Expression.Function ast) {  //Come back to this to fix if-statement
         Environment.Function f = scope.lookupFunction(ast.getName(), ast.getArguments().size());
 
         List<Environment.Type> types = f.getParameterTypes();
         for (int i = 0; i < ast.getArguments().size(); i++){
             visit(ast.getArguments().get(i));
-            requireAssignable(ast.getArguments().get(i).getType(), types.get(i));
+            requireAssignable(types.get(i), ast.getArguments().get(i).getType());
         }
 
         ast.setFunction(f);
@@ -312,7 +362,8 @@ public final class Analyzer implements Ast.Visitor<Void> {
         if (t1 != null){
             if (t1 == "Any"){
                 return;
-            } if (t1 == "Comparable"){
+            }
+            if (t1 == "Comparable"){
                 if (t2.equals("Integer") ||
                         t2.equals("Decimal") ||
                         t2.equals("Character") ||
@@ -320,6 +371,7 @@ public final class Analyzer implements Ast.Visitor<Void> {
                     return;
                 }
             }
+
         }
         throw new RuntimeException("Mismatched Type Assignment");
     }
