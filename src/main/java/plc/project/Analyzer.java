@@ -25,7 +25,22 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Source ast) {
-        throw new UnsupportedOperationException();  // TODO
+        if(scope.lookupFunction("main", 0) == null || scope.lookupFunction("main", 0).getReturnType() != Environment.Type.INTEGER)
+        {
+            throw new RuntimeException("invalid main function");
+        }
+
+        List<Ast.Global> globals = ast.getGlobals();
+        List<Ast.Function> functions = ast.getFunctions();
+
+        for (Ast.Global global : globals) {
+            visit(global);
+        }
+        for (Ast.Function function : functions) {
+            visit(function);
+        }
+
+        return null;
     }
 
     @Override
@@ -336,9 +351,10 @@ public final class Analyzer implements Ast.Visitor<Void> {
         if (ast.getOffset().isPresent()){
             Ast.Expression a = ast.getOffset().get();
 
-            if (a.getType().getName().equals("Integer")){
+            if (!a.getType().getName().equals("Integer")){
                 throw new RuntimeException("Non Integer Offset in Access");
             }
+            visit(a);
         }
 
         ast.setVariable(scope.lookupVariable(ast.getName()));
