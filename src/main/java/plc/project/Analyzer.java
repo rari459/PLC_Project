@@ -5,8 +5,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * See the specification for information about what the different visit
  * methods should do.
@@ -285,40 +283,42 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
         String operator = ast.getOperator();
 
-        if (operator == "&&" || operator == "||") {
+        if (operator.equals("&&") || operator.equals("||")) {
             requireAssignable(Environment.Type.BOOLEAN, l.getType());
             requireAssignable(Environment.Type.BOOLEAN, r.getType());
+            requireAssignable(l.getType(), r.getType());
             ast.setType(Environment.Type.BOOLEAN);
-        } else if (operator == "<" || operator == ">" || operator == "==" || operator == "!="){
+        } else if (operator.equals("<") || operator.equals(">") || operator.equals("==")|| operator.equals("!=")){
             requireAssignable(Environment.Type.COMPARABLE, l.getType());
             requireAssignable(Environment.Type.COMPARABLE, r.getType());
+            requireAssignable(l.getType(), r.getType());
             ast.setType(Environment.Type.BOOLEAN);
-        } else if (operator == "+"){
-            if (l.getType().getName() == "String" || r.getType().getName() == "String"){
+        } else if (operator.equals("+")){
+            if (l.getType().getName().equals("String") || r.getType().getName().equals("String")){
                 ast.setType(Environment.Type.STRING);
-            } else if (l.getType().getName() == "Integer"){
+            } else if (l.getType().getName().equals("Integer")){
                 requireAssignable(l.getType(), r.getType());
                 ast.setType(Environment.Type.INTEGER);
             }
-            else if (l.getType().getName() == "Decimal"){
+            else if (l.getType().getName().equals("Decimal")){
                 requireAssignable(l.getType(), r.getType());
                 ast.setType(Environment.Type.DECIMAL);
             } else {
                 throw new RuntimeException("Invalid Type for +");
             }
-        } else if (operator == "*" ||operator == "/" || operator == "-"){
-            if (l.getType().getName() == "Integer"){
+        } else if (operator.equals("*") ||operator.equals("/") || operator.equals("-")){
+            if (l.getType().getName().equals("Integer")){
                 requireAssignable(l.getType(), r.getType());
                 ast.setType(Environment.Type.INTEGER);
             }
-            else if (l.getType().getName() == "Decimal"){
+            else if (l.getType().getName().equals("Decimal")){
                 requireAssignable(l.getType(), r.getType());
                 ast.setType(Environment.Type.DECIMAL);
             } else {
                 throw new RuntimeException("Invalid Type for */-");
             }
-        } else if (operator == "^"){
-            if (l.getType().getName() == "Integer"){
+        } else if (operator.equals("^")){
+            if (l.getType().getName().equals("Integer")){
                 requireAssignable(l.getType(), r.getType());
                 ast.setType(Environment.Type.INTEGER);
             }
@@ -336,7 +336,7 @@ public final class Analyzer implements Ast.Visitor<Void> {
         if (ast.getOffset().isPresent()){
             Ast.Expression a = ast.getOffset().get();
 
-            if (a.getType().getName() != "Integer"){
+            if (a.getType().getName().equals("Integer")){
                 throw new RuntimeException("Non Integer Offset in Access");
             }
         }
@@ -347,7 +347,7 @@ public final class Analyzer implements Ast.Visitor<Void> {
     }
 
     @Override
-    public Void visit(Ast.Expression.Function ast) {  //Come back to this to fix if-statement
+    public Void visit(Ast.Expression.Function ast) {
         Environment.Function f = scope.lookupFunction(ast.getName(), ast.getArguments().size());
 
         List<Environment.Type> types = f.getParameterTypes();
@@ -379,11 +379,11 @@ public final class Analyzer implements Ast.Visitor<Void> {
             return;
         }
 
-        if (t1 != null){
-            if (t1 == "Any"){
+        if (!t1.equals(Environment.Type.NIL.getName())){
+            if (t1.equals("Any")){
                 return;
             }
-            if (t1 == "Comparable"){
+            if (t1.equals("Comparable")){
                 if (t2.equals("Integer") ||
                         t2.equals("Decimal") ||
                         t2.equals("Character") ||
