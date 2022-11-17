@@ -218,19 +218,20 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Statement.While ast) {
-        Ast.Expression condition = ast.getCondition();
 
-        if (condition.getType() == Environment.Type.BOOLEAN){
+        Ast.Expression condition = ast.getCondition();
+        visit(condition);
+        requireAssignable(Environment.Type.BOOLEAN, ast.getCondition().getType());
+        try {
             scope = new Scope(scope);
 
             for (int i = 0; i < ast.getStatements().size(); i++){
                 visit(ast.getStatements().get(i));
             }
+        } finally {
             scope = scope.getParent();
-            return null;
         }
-
-        throw new RuntimeException("Non boolean condition");
+        return null;
     }
 
     @Override
@@ -364,6 +365,7 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Expression.Function ast) {
+
         Environment.Function f = scope.lookupFunction(ast.getName(), ast.getArguments().size());
 
         List<Environment.Type> types = f.getParameterTypes();
