@@ -384,6 +384,7 @@ public final class Analyzer implements Ast.Visitor<Void> {
     public Void visit(Ast.Expression.PlcList ast) {
         for (Ast.Expression a : ast.getValues())
         {
+            visit(a);
             requireAssignable(ast.getType(), a.getType());
         }
         return null;
