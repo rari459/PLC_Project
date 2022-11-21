@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="While, Function Expression Complete">
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Completed Switch Statement">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Analyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Analyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/AnalyzerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/AnalyzerTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +63,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.AnalyzerTests">
+  <component name="RunManager" selected="Gradle.AnalyzerTests.testGlobal">
     <configuration name="AnalyzerTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -193,11 +194,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.AnalyzerTests.testGlobal" />
         <item itemvalue="Gradle.AnalyzerTests" />
         <item itemvalue="Gradle.AnalyzerTests.testIfStatement" />
         <item itemvalue="Gradle.AnalyzerTests.testFunctionExpression" />
         <item itemvalue="Gradle.AnalyzerTests.testFunction" />
-        <item itemvalue="Gradle.AnalyzerTests.testGlobal" />
       </list>
     </recent_temporary>
   </component>

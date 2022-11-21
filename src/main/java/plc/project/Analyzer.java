@@ -12,7 +12,6 @@ import java.util.List;
 public final class Analyzer implements Ast.Visitor<Void> {
 
     public Scope scope;
-    private Ast.Function function;
 
     public Analyzer(Scope parent) {
         scope = new Scope(parent);
@@ -48,11 +47,15 @@ public final class Analyzer implements Ast.Visitor<Void> {
         String name = ast.getName();
         if (ast.getValue().isPresent()){
             Environment.Type globalType = Environment.getType(ast.getTypeName());
-            Ast.Expression val = ast.getValue().get();
 
-            requireAssignable(val.getType(), globalType);
-
-            visit(ast.getValue().get());
+            if (ast.getValue().get() instanceof Ast.Expression.PlcList){
+                ((Ast.Expression.PlcList) ast.getValue().get()).setType(globalType);
+                visit(ast.getValue().get());
+            } else {
+                visit(ast.getValue().get());
+                Ast.Expression val = ast.getValue().get();
+                requireAssignable(val.getType(), globalType);
+            }
         }
 
         scope.defineVariable(name, name, Environment.getType(ast.getTypeName()), true, Environment.NIL);
@@ -284,7 +287,7 @@ public final class Analyzer implements Ast.Visitor<Void> {
 
         if (expr instanceof Ast.Expression.Binary){
             visit(expr);
-            ast.setType(ast.getExpression().getType());
+            ast.setType(expr.getType());
             return null;
         }
         throw new RuntimeException("Invalid Group Expression, not Binary");

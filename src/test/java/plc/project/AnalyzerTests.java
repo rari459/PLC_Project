@@ -93,6 +93,13 @@ public final class AnalyzerTests {
                         // VAR name: Unknown;
                         new Ast.Global("name", "Unknown", true, Optional.empty()),
                         null
+                ),
+                Arguments.of("Valid List",
+                        // LIST list: Integer = [1, 2];
+                        new Ast.Global("list", "Integer", true, Optional.of(new Ast.Expression.PlcList(Arrays.asList(new Ast.Expression.Literal(new BigInteger("1")), new Ast.Expression.Literal(new BigInteger("2")))))),
+                        init(new Ast.Global("list", "Integer", true, Optional.of(new Ast.Expression.PlcList(Arrays.asList(new Ast.Expression.Literal(new BigInteger("1")), new Ast.Expression.Literal(new BigInteger("2")))))), ast -> {
+                            ast.setVariable(new Environment.Variable("list", "list", Environment.Type.INTEGER, true, Environment.NIL));
+                        })
                 )
         );
     }
@@ -465,6 +472,34 @@ public final class AnalyzerTests {
                         new Ast.Expression.Binary("+",
                                 new Ast.Expression.Literal(BigInteger.ONE),
                                 new Ast.Expression.Literal(BigDecimal.ONE)
+                        ),
+                        null
+                ), Arguments.of("Decimal Addition",
+                        // 1.0 + 10.0
+                        new Ast.Expression.Binary("+",
+                                new Ast.Expression.Literal(BigDecimal.ONE),
+                                new Ast.Expression.Literal(BigDecimal.TEN)
+                        ),
+                        init(new Ast.Expression.Binary("+",
+                                init(new Ast.Expression.Literal(BigDecimal.ONE), ast -> ast.setType(Environment.Type.DECIMAL)),
+                                init(new Ast.Expression.Literal(BigDecimal.TEN), ast -> ast.setType(Environment.Type.DECIMAL))
+                        ), ast -> ast.setType(Environment.Type.DECIMAL))
+                ),
+                Arguments.of(" Valid Decimal Comparison",
+                        // 1.0 + 10.0
+                        new Ast.Expression.Binary(">",
+                                new Ast.Expression.Literal(BigDecimal.ONE),
+                                new Ast.Expression.Literal(BigDecimal.TEN)
+                        ),
+                        init(new Ast.Expression.Binary(">",
+                                init(new Ast.Expression.Literal(BigDecimal.ONE), ast -> ast.setType(Environment.Type.DECIMAL)),
+                                init(new Ast.Expression.Literal(BigDecimal.TEN), ast -> ast.setType(Environment.Type.DECIMAL))
+                        ), ast -> ast.setType(Environment.Type.BOOLEAN))
+                ), Arguments.of(" Invalid Comparison",
+                        // 1.0 + 10.0
+                        new Ast.Expression.Binary(">",
+                                new Ast.Expression.Literal(BigDecimal.ONE),
+                                new Ast.Expression.Literal(Boolean.TRUE)
                         ),
                         null
                 )
