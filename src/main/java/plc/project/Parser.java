@@ -227,9 +227,9 @@ public final class Parser {
                     List<Ast.Statement> exp = new ArrayList<>();
                     String returnType = "";
                     if (match(")")){
-                        if (match("(", ":", Token.Type.IDENTIFIER, ")"))
+                        if (match( ":", Token.Type.IDENTIFIER))
                         {
-                            returnType = tokens.get(-2).getLiteral();
+                            returnType = tokens.get(-1).getLiteral();
                         }
                         if (!match("DO")){
                             throw new ParseException("Expected DO", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
@@ -353,26 +353,42 @@ public final class Parser {
             String name = tokens.get(0).getLiteral();
             match(Token.Type.IDENTIFIER);
 
-            String typeName = "";
-            if (match("(", ":", Token.Type.IDENTIFIER, ")"))
+
+            if (match(":", Token.Type.IDENTIFIER))
             {
-                typeName = tokens.get(-2).getLiteral();
+                String typeName = "";
+                typeName = tokens.get(-1).getLiteral();
+                Ast.Expression expr = null;
+
+                if (match("="))
+                {
+                    expr = parseExpression();
+                }
+
+                if (!match(";"))
+                {
+                    throw new ParseException("Missing Semicolon", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                }
+
+                return new Ast.Statement.Declaration(name, Optional.of(typeName), Optional.ofNullable(expr));
             }
-
-            Ast.Expression expr = null;
-
-            if (match("="))
+            else
             {
-                expr = parseExpression();
-            }
+                Ast.Expression expr = null;
 
-            if (!match(";"))
-            {
-                throw new ParseException("Missing Semicolon", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
-            }
+                if (match("="))
+                {
+                    expr = parseExpression();
+                }
 
-            return new Ast.Statement.Declaration(name, Optional.of(typeName), Optional.ofNullable(expr));
-        } catch (ParseException e){
+                if (!match(";"))
+                {
+                    throw new ParseException("Missing Semicolon", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                }
+
+                return new Ast.Statement.Declaration(name, Optional.empty(), Optional.ofNullable(expr));
+            }
+            } catch (ParseException e){
             throw new ParseException(e.getMessage(), e.getIndex());
         }
     }
