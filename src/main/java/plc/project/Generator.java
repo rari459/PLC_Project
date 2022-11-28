@@ -45,17 +45,34 @@ public final class Generator implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Statement.Expression ast) {
-        throw new UnsupportedOperationException(); //TODO
+        print(ast.getExpression(), ";");
+        return null;
     }
 
     @Override
     public Void visit(Ast.Statement.Declaration ast) {
-        throw new UnsupportedOperationException(); //TODO
+        if (ast.getTypeName().isPresent()){
+            print(Environment.getType(ast.getTypeName().get()).getJvmName());
+        } else {
+            if (ast.getValue().isPresent()) {
+                print(ast.getValue().get().getType().getJvmName());
+            }
+        }
+
+        print(" ");
+        print(ast.getVariable().getJvmName());
+
+        if (ast.getValue().isPresent()){
+            print(" = ", ast.getValue().get());
+        }
+        print(";");
+        return null;
     }
 
     @Override
     public Void visit(Ast.Statement.Assignment ast) {
-        throw new UnsupportedOperationException(); //TODO
+        print(ast.getReceiver(), " = ", ast.getValue(), ";");
+        return null;
     }
 
     @Override
@@ -75,42 +92,112 @@ public final class Generator implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Statement.While ast) {
+
+
         throw new UnsupportedOperationException(); //TODO
     }
 
     @Override
     public Void visit(Ast.Statement.Return ast) {
-        throw new UnsupportedOperationException(); //TODO
+        print("return ", ast.getValue(), ";");
+
+        return null;
     }
 
     @Override
     public Void visit(Ast.Expression.Literal ast) {
-        throw new UnsupportedOperationException(); //TODO
+        if (ast.getType() == Environment.Type.STRING){
+            print("\"");
+            print(ast.getLiteral());
+            print("\"");
+        } else if (ast.getType() == Environment.Type.CHARACTER){
+            print("\'");
+            print(ast.getLiteral());
+            print("\'");
+        }
+        else if (ast.getType() == Environment.Type.INTEGER){
+            print(ast.getLiteral());
+        } else if (ast.getType() == Environment.Type.BOOLEAN){
+            print(ast.getLiteral());
+        } else if (ast.getType() == Environment.Type.DECIMAL){
+            print(ast.getLiteral().toString());
+        } else {
+            throw new RuntimeException("Incompatible Literal Type");
+        }
+
+        return null;
+
     }
 
     @Override
     public Void visit(Ast.Expression.Group ast) {
-        throw new UnsupportedOperationException(); //TODO
+        print("(");
+        print(ast.getExpression());
+        print(")");
+        return null;
     }
 
     @Override
     public Void visit(Ast.Expression.Binary ast) {
-        throw new UnsupportedOperationException(); //TODO
+        if (ast.getOperator().equals("^")){
+            print("Math.pow(", ast.getLeft(), " ", ast.getRight(), ")");
+        }
+        else {
+            print(ast.getLeft());
+            print(" ", ast.getOperator(), " ");
+            print(ast.getRight());
+        }
+        return null;
     }
 
     @Override
     public Void visit(Ast.Expression.Access ast) {
-        throw new UnsupportedOperationException(); //TODO
+        print(ast.getName());
+
+        if (ast.getOffset().isPresent()){
+            print("[");
+            print(ast.getOffset());
+            print("]");
+        }
+
+        return null;
     }
 
     @Override
     public Void visit(Ast.Expression.Function ast) {
-        throw new UnsupportedOperationException(); //TODO
+        print(ast.getFunction().getJvmName());
+
+        print("(");
+
+        if (ast.getArguments().size() > 0){
+            for (int i = 0; i < ast.getArguments().size()-1; i++){
+                print(ast.getArguments().get(i));
+                print(", ");
+            }
+            print(ast.getArguments().get(ast.getArguments().size()-1));
+        }
+
+        print(")");
+
+        return null;
     }
 
     @Override
     public Void visit(Ast.Expression.PlcList ast) {
-        throw new UnsupportedOperationException(); //TODO
+        print("{");
+
+        if (ast.getValues().size() > 0){
+            for (int i = 0; i < ast.getValues().size()-1; i++){
+                print(ast.getValues().get(i));
+                print(", ");
+            }
+            print(ast.getValues().get(ast.getValues().size()-1));
+        }
+
+        print("}");
+
+        return null;
+
     }
 
 }
