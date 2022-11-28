@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="While, Function Expression Complete">
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Fixed Global List Error">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/AnalyzerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/AnalyzerTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/ParserTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/ParserTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,13 +40,6 @@
       </state>
     </system>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -69,7 +64,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.ParserTests">
     <configuration name="AnalyzerTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -84,29 +79,6 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;plc.project.AnalyzerTests&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="AnalyzerTests.testFunction" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;plc.project.AnalyzerTests.testFunction&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -185,6 +157,29 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="ParserTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;plc.project.ParserTests&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="ProgLang" />
       <method v="2">
@@ -200,11 +195,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ParserTests" />
         <item itemvalue="Gradle.AnalyzerTests.testGlobal" />
         <item itemvalue="Gradle.AnalyzerTests" />
         <item itemvalue="Gradle.AnalyzerTests.testIfStatement" />
         <item itemvalue="Gradle.AnalyzerTests.testFunctionExpression" />
-        <item itemvalue="Gradle.AnalyzerTests.testFunction" />
       </list>
     </recent_temporary>
   </component>
@@ -218,7 +213,6 @@
       <updated>1661895572447</updated>
       <workItem from="1666039725849" duration="2067000" />
       <workItem from="1666096690438" duration="254000" />
-      <workItem from="1669590323660" duration="1438000" />
     </task>
     <task id="LOCAL-00001" summary="Downloaded necessary files">
       <created>1664764021699</created>
