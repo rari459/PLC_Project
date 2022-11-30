@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Added Generator Files">
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Completed Statement Declaration, Statement Assignment, Expression return, literal, group, binary, access, function, PlcList">
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Generator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/AnalyzerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/AnalyzerTests.java" afterDir="false" />
@@ -64,30 +64,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.GeneratorTests.testDeclarationStatement">
-    <configuration name="AnalyzerTests.testGlobal" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;plc.project.AnalyzerTests.testGlobal&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Gradle.GeneratorTests.testIfStatement">
     <configuration name="GeneratorTests.testBinaryExpression" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -157,6 +134,29 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="GeneratorTests.testIfStatement" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;plc.project.GeneratorTests.testIfStatement&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="ParserTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -195,11 +195,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.GeneratorTests.testIfStatement" />
         <item itemvalue="Gradle.GeneratorTests.testDeclarationStatement" />
         <item itemvalue="Gradle.GeneratorTests.testBinaryExpression" />
         <item itemvalue="Gradle.GeneratorTests.testFunctionExpression" />
         <item itemvalue="Gradle.ParserTests" />
-        <item itemvalue="Gradle.AnalyzerTests.testGlobal" />
       </list>
     </recent_temporary>
   </component>
@@ -396,7 +396,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669656639211</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Completed Statement Declaration, Statement Assignment, Expression return, literal, group, binary, access, function, PlcList">
+      <created>1669664296247</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1669664296247</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -414,7 +421,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Downloaded necessary files" />
     <MESSAGE value="Finish if-else conditional statement for parse statement" />
     <MESSAGE value="Fixed Missing Value exception in Statement Assignment" />
     <MESSAGE value="Fixed Primary Expression to recognize exceptions, only missing test is testBinaryEquality" />
@@ -439,7 +445,8 @@
     <MESSAGE value="Fixed If-Statement, Function Expression" />
     <MESSAGE value="Completed Switch Statement" />
     <MESSAGE value="Added Generator Files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Generator Files" />
+    <MESSAGE value="Completed Statement Declaration, Statement Assignment, Expression return, literal, group, binary, access, function, PlcList" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed Statement Declaration, Statement Assignment, Expression return, literal, group, binary, access, function, PlcList" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
