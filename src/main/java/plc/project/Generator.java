@@ -30,17 +30,91 @@ public final class Generator implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Source ast) {
-        throw new UnsupportedOperationException(); //TODO
+        print("public class Main {");
+        newline(0);
+        indent = indent + 1;
+        for (Ast.Global global : ast.getGlobals())
+        {
+            newline(indent);
+            print(global);
+        }
+        newline(indent);
+        print("public static void main(String[] args) {");
+        newline(indent + 1);
+        print("System.exit(new Main().main());");
+        newline(indent);
+        print("}");
+        newline(0);
+        for (Ast.Function function : ast.getFunctions()) {
+            newline(indent);
+            print(function);
+            newline(0);
+        }
+        newline(0);
+        print("}");
+        return null;
     }
 
     @Override
     public Void visit(Ast.Global ast) {
-        throw new UnsupportedOperationException(); //TODO
+        String name = ast.getName();
+        String typeName = Environment.getType(ast.getTypeName()).getJvmName();
+
+        if (ast.getMutable() || ast.getValue().get() instanceof Ast.Expression.PlcList) {
+            if(ast.getValue().get() instanceof Ast.Expression.PlcList)
+            {
+                print(typeName, "[] ", name);
+            }
+            else {
+                print(typeName, " ", name);
+            }
+            if (ast.getValue().isPresent()) {
+                print(" = ", ast.getValue().get());
+            }
+            print(";");
+        } else {
+            print("final ", typeName, " ", name);
+            if (ast.getValue().isPresent()) {
+                print(" = ", ast.getValue().get());
+            }
+            print(";");
+        }
+
+        return null;
     }
 
     @Override
     public Void visit(Ast.Function ast) {
-        throw new UnsupportedOperationException(); //TODO
+        String jvmType = Environment.getType(ast.getReturnTypeName().get()).getJvmName();
+        print(jvmType, " ", ast.getName(), "(");
+        for (int i = 0; i < ast.getParameters().size(); i++)
+        {
+            String type = Environment.getType(ast.getParameters().get(i)).getJvmName();
+            String name = ast.getParameters().get(i);
+            print(type, " ", name);
+            if (i != ast.getParameters().size() - 1)
+            {
+                print(", ");
+            }
+        }
+        print(") {");
+        if (ast.getStatements().isEmpty())
+        {
+            print(" }");
+            newline(indent);
+        }
+        else {
+            indent++;
+            for (int i = 0; i < ast.getStatements().size(); i++)
+            {
+                newline(indent);
+                print(ast.getStatements().get(i));
+            }
+            indent--;
+            newline(indent);
+            print("}");
+        }
+        return null;
     }
 
     @Override
@@ -108,12 +182,44 @@ public final class Generator implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Statement.Switch ast) {
-        throw new UnsupportedOperationException(); //TODO
+        print("switch (", ast.getCondition(), ") {");
+        indent++;
+        for (int i = 0; i < ast.getCases().size() - 1; i++)
+        {
+            newline(indent);
+            print("case ", ast.getCases().get(i));
+        }
+        newline(indent);
+        print("default:");
+        indent++;
+        Ast.Statement.Case def = ast.getCases().get(ast.getCases().size() - 1);
+        for (int i = 0; i < def.getStatements().size(); i++)
+        {
+            newline(indent);
+            print(def.getStatements().get(i));
+        }
+        indent--;
+
+        indent--;
+        newline(indent);
+        print("}");
+
+        return null;
     }
 
     @Override
     public Void visit(Ast.Statement.Case ast) {
-        throw new UnsupportedOperationException(); //TODO
+        print(ast.getValue().get(), ":");
+        indent++;
+        for (int i = 0; i < ast.getStatements().size(); i++)
+        {
+            newline(indent);
+            print(ast.getStatements().get(i));
+        }
+        newline(indent);
+        print("break;");
+        indent--;
+        return null;
     }
 
     @Override

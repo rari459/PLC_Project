@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Completed Statement Declaration, Statement Assignment, Expression return, literal, group, binary, access, function, PlcList">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Generator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/AnalyzerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/AnalyzerTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/ParserTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/ParserTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +62,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.GeneratorTests.testIfStatement">
+  <component name="RunManager">
     <configuration name="GeneratorTests.testBinaryExpression" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -213,6 +211,7 @@
       <updated>1661895572447</updated>
       <workItem from="1666039725849" duration="2067000" />
       <workItem from="1666096690438" duration="254000" />
+      <workItem from="1669816804561" duration="8467000" />
     </task>
     <task id="LOCAL-00001" summary="Downloaded necessary files">
       <created>1664764021699</created>
