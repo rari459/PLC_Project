@@ -235,10 +235,9 @@ public final class Generator implements Ast.Visitor<Void> {
             }
             indent -=1;
         }
-
+        newline(indent);
         print("}");
         return null;
-
     }
 
     @Override
@@ -300,7 +299,7 @@ public final class Generator implements Ast.Visitor<Void> {
 
         if (ast.getOffset().isPresent()){
             print("[");
-            print(ast.getOffset());
+            print(ast.getOffset().get());
             print("]");
         }
 

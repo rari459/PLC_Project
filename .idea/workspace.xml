@@ -62,7 +62,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.GeneratorTests.testBinaryExpression">
     <configuration name="GeneratorTests.testBinaryExpression" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -211,7 +211,8 @@
       <updated>1661895572447</updated>
       <workItem from="1666039725849" duration="2067000" />
       <workItem from="1666096690438" duration="254000" />
-      <workItem from="1669816804561" duration="8467000" />
+      <workItem from="1669816804561" duration="8661000" />
+      <workItem from="1670081606050" duration="616000" />
     </task>
     <task id="LOCAL-00001" summary="Downloaded necessary files">
       <created>1664764021699</created>
