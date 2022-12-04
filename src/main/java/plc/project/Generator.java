@@ -31,26 +31,30 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Source ast) {
         print("public class Main {");
-        newline(0);
+        newline(indent);
         indent = indent + 1;
+        newline(indent);
         for (Ast.Global global : ast.getGlobals())
         {
-            newline(indent);
             print(global);
+            newline(indent);
         }
-        newline(indent);
         print("public static void main(String[] args) {");
         newline(indent + 1);
         print("System.exit(new Main().main());");
         newline(indent);
         print("}");
-        newline(0);
+
         for (Ast.Function function : ast.getFunctions()) {
+            indent -= 1;
+            newline(indent);
+            indent += 1;
             newline(indent);
             print(function);
-            newline(0);
         }
-        newline(0);
+        indent -= 1;
+        newline(indent);
+        newline(indent);
         print("}");
         return null;
     }
@@ -85,8 +89,12 @@ public final class Generator implements Ast.Visitor<Void> {
 
     @Override
     public Void visit(Ast.Function ast) {
-        String jvmType = Environment.getType(ast.getReturnTypeName().get()).getJvmName();
-        print(jvmType, " ", ast.getName(), "(");
+        if (ast.getReturnTypeName().isPresent()) {
+            String jvmType = Environment.getType(ast.getReturnTypeName().get()).getJvmName();
+            print(jvmType);
+        }
+
+        print(" ", ast.getName(), "(");
         for (int i = 0; i < ast.getParameters().size(); i++)
         {
             String type = Environment.getType(ast.getParameters().get(i)).getJvmName();
