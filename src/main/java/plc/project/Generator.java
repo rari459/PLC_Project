@@ -63,26 +63,18 @@ public final class Generator implements Ast.Visitor<Void> {
     public Void visit(Ast.Global ast) {
         String name = ast.getName();
         String typeName = Environment.getType(ast.getTypeName()).getJvmName();
-
-        if (ast.getMutable() || ast.getValue().get() instanceof Ast.Expression.PlcList) {
-            if(ast.getValue().get() instanceof Ast.Expression.PlcList)
-            {
-                print(typeName, "[] ", name);
-            }
-            else {
-                print(typeName, " ", name);
-            }
-            if (ast.getValue().isPresent()) {
-                print(" = ", ast.getValue().get());
-            }
-            print(";");
+        if (ast.getValue().isPresent() && ast.getValue().get() instanceof Ast.Expression.PlcList){
+            print(typeName, "[] ", name);
+        } else if (ast.getMutable()){
+            print(typeName, " ", name);
         } else {
             print("final ", typeName, " ", name);
-            if (ast.getValue().isPresent()) {
-                print(" = ", ast.getValue().get());
-            }
-            print(";");
         }
+
+        if (ast.getValue().isPresent()) {
+            print(" = ", ast.getValue().get());
+        }
+        print(";");
 
         return null;
     }
@@ -97,7 +89,7 @@ public final class Generator implements Ast.Visitor<Void> {
         print(" ", ast.getName(), "(");
         for (int i = 0; i < ast.getParameters().size(); i++)
         {
-            String type = Environment.getType(ast.getParameters().get(i)).getJvmName();
+            String type = Environment.getType(ast.getParameterTypeNames().get(i)).getJvmName();
             String name = ast.getParameters().get(i);
             print(type, " ", name);
             if (i != ast.getParameters().size() - 1)

@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Completed Statement Declaration, Statement Assignment, Expression return, literal, group, binary, access, function, PlcList">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="b9b90700-254b-4072-bc22-f9c88ea9e28b" name="Changes" comment="Edited Source and Function">
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Generator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plc/project/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/AnalyzerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/AnalyzerTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/GeneratorTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/GeneratorTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/plc/project/ParserTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/plc/project/ParserTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,16 +56,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/murar/Downloads/Ast.java&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/murar/Downloads/Ast.java",
+    "settings.editor.selected.configurable": "editor.preferences.appearance"
   }
-}</component>
-  <component name="RunManager" selected="Gradle.GeneratorTests.testSource">
+}]]></component>
+  <component name="RunManager" selected="Gradle.GeneratorTests">
     <configuration name="GeneratorTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -196,8 +196,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.GeneratorTests.testSource" />
         <item itemvalue="Gradle.GeneratorTests" />
+        <item itemvalue="Gradle.GeneratorTests.testSource" />
         <item itemvalue="Gradle.GeneratorTests.testIfStatement" />
         <item itemvalue="Gradle.GeneratorTests.testDeclarationStatement" />
         <item itemvalue="Gradle.GeneratorTests.testBinaryExpression" />
@@ -405,7 +405,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669664296247</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Edited Source and Function">
+      <created>1670113730773</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1670113730773</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -423,7 +430,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Finish if-else conditional statement for parse statement" />
     <MESSAGE value="Fixed Missing Value exception in Statement Assignment" />
     <MESSAGE value="Fixed Primary Expression to recognize exceptions, only missing test is testBinaryEquality" />
     <MESSAGE value="Fixed declaration and while statement methods to pass given tests." />
@@ -448,7 +454,8 @@
     <MESSAGE value="Completed Switch Statement" />
     <MESSAGE value="Added Generator Files" />
     <MESSAGE value="Completed Statement Declaration, Statement Assignment, Expression return, literal, group, binary, access, function, PlcList" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed Statement Declaration, Statement Assignment, Expression return, literal, group, binary, access, function, PlcList" />
+    <MESSAGE value="Edited Source and Function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edited Source and Function" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
