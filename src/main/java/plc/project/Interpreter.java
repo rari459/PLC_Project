@@ -79,7 +79,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
     }
 
     @Override
-    public Environment.PlcObject visit(Ast.Statement.Declaration ast) {  //COME BACK TO THIS TOO
+    public Environment.PlcObject visit(Ast.Statement.Declaration ast) {
         if (ast.getValue().isPresent())
         {
             Ast.Expression exp = ast.getValue().get();
@@ -124,7 +124,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
     @Override
     public Environment.PlcObject visit(Ast.Statement.If ast) {
-        if (requireType(Boolean.class, visit(ast.getCondition())) == true || requireType(Boolean.class, visit(ast.getCondition())) == false){
+        if (requireType(Boolean.class, visit(ast.getCondition())) || !requireType(Boolean.class, visit(ast.getCondition()))){
             try {
                 scope = new Scope(scope);
                 Ast.Expression condition = ast.getCondition();
@@ -213,7 +213,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
 
         Environment.PlcObject lhs = visit(ast.getLeft());
 
-        if (operator == "+"){
+        if (operator.equals("+")){
             Environment.PlcObject rhs = visit(ast.getRight());
             if (lhs.getValue() instanceof String || rhs.getValue() instanceof String){
                 if (lhs.getValue() instanceof String && rhs.getValue() instanceof String){
@@ -250,7 +250,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
             }
 
         }
-        else if (operator == "-"){
+        else if (operator.equals("-")){
             if (lhs.getValue() instanceof BigInteger){
                 Environment.PlcObject rhs = visit(ast.getRight());
                 if (rhs.getValue() instanceof BigInteger){
@@ -270,7 +270,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
             } else {
                 throw new RuntimeException();
             }
-        } else if (operator == "*"){
+        } else if (operator.equals("*")){
             if (lhs.getValue() instanceof BigInteger){
                 Environment.PlcObject rhs = visit(ast.getRight());
                 if (rhs.getValue() instanceof BigInteger){
@@ -291,7 +291,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                 throw new RuntimeException();
             }
         }
-        else if (operator == "/"){
+        else if (operator.equals("/")){
             if (lhs.getValue() instanceof BigInteger){
                 Environment.PlcObject rhs = visit(ast.getRight());
                 if ((rhs.getValue() instanceof BigInteger) && (((BigInteger) rhs.getValue()).intValue() != 0)){
@@ -312,7 +312,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                 throw new RuntimeException();
             }
         }
-        else if (operator == "^"){
+        else if (operator.equals("^")){
             if (lhs.getValue() instanceof BigInteger){
                 Environment.PlcObject rhs = visit(ast.getRight());
                 if ((rhs.getValue() instanceof BigInteger)) {
@@ -344,21 +344,21 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
                 throw new RuntimeException();
             }
         }
-        else if (operator == "=="){
+        else if (operator.equals("==")){
             Environment.PlcObject rhs = visit(ast.getRight());
 
             boolean equality = Objects.equals(lhs.getValue(), rhs.getValue());
 
             return Environment.create(equality);
         }
-        else if (operator == "!="){
+        else if (operator.equals("!=")){
             Environment.PlcObject rhs = visit(ast.getRight());
 
             boolean equality = Objects.equals(lhs.getValue(), rhs.getValue());
 
             return Environment.create(!equality);
         }
-        else if (operator == "||"){
+        else if (operator.equals("||")){
             if (lhs.getValue() instanceof Boolean ){
                 if ((Boolean)lhs.getValue() == true){
                     return Environment.create(true);
@@ -376,7 +376,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
             } else {
                 throw new RuntimeException();
             }
-        } else if (operator  == "&&"){
+        } else if (operator.equals("&&")){
             if (lhs.getValue() instanceof Boolean ){
                 if ((Boolean)lhs.getValue() == false){
                     return Environment.create(false);
@@ -394,7 +394,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
             } else {
                 throw new RuntimeException();
             }
-        } else if (operator  == ">"){
+        } else if (operator.equals(">")){
             if (lhs.getValue() instanceof Comparable ) {
                 Environment.PlcObject rhs = visit(ast.getRight());
 
@@ -407,7 +407,7 @@ public class Interpreter implements Ast.Visitor<Environment.PlcObject> {
             } else {
                 throw new RuntimeException();
             }
-        } else if (operator  == "<"){
+        } else if (operator.equals("<")){
             if (lhs.getValue() instanceof Comparable ) {
                 Environment.PlcObject rhs = visit(ast.getRight());
 
