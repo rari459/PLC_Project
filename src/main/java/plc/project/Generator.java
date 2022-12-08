@@ -100,7 +100,7 @@ public final class Generator implements Ast.Visitor<Void> {
         print(") {");
         if (ast.getStatements().isEmpty())
         {
-            print(" }");
+            print("}");
             newline(indent);
         }
         else {
