@@ -282,7 +282,7 @@ public final class Generator implements Ast.Visitor<Void> {
     @Override
     public Void visit(Ast.Expression.Binary ast) {
         if (ast.getOperator().equals("^")){
-            print("Math.pow(", ast.getLeft(), " ", ast.getRight(), ")");
+            print("Math.pow(", ast.getLeft(), ", ", ast.getRight(), ")");
         }
         else {
             print(ast.getLeft());
