@@ -691,7 +691,6 @@ public final class Parser {
         }
         match(Token.Type.STRING);
         String result = tokens.get(-1).getLiteral();
-        result = result.substring(1, result.length()-1);
         result = replaceEscape(result);
 
         return new Ast.Expression.Literal(result);
