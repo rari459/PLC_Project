@@ -62,7 +62,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.GeneratorTests.testSource">
+  <component name="RunManager">
     <configuration name="GeneratorTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -212,7 +212,7 @@
       <workItem from="1666039725849" duration="2067000" />
       <workItem from="1666096690438" duration="254000" />
       <workItem from="1669816804561" duration="8467000" />
-      <workItem from="1670517649598" duration="1950000" />
+      <workItem from="1670517649598" duration="5548000" />
     </task>
     <task id="LOCAL-00001" summary="Downloaded necessary files">
       <created>1664764021699</created>

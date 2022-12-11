@@ -210,6 +210,10 @@ public final class Parser {
                     if (match(Token.Type.IDENTIFIER))
                     {
                         func.add(tokens.get(-1).getLiteral());
+                        if (!peek(":", Token.Type.IDENTIFIER))
+                        {
+                            throw new ParseException("Missing argument type", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                        }
                         match(":", Token.Type.IDENTIFIER);
                         paramTypes.add(tokens.get(-1).getLiteral());
                     }
@@ -220,6 +224,10 @@ public final class Parser {
                             throw new ParseException("Trailing Comma", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
                         }
                         func.add(tokens.get(-1).getLiteral());
+                        if (!peek(":", Token.Type.IDENTIFIER))
+                        {
+                            throw new ParseException("Missing argument type", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                        }
                         match(":", Token.Type.IDENTIFIER);
                         paramTypes.add(tokens.get(-1).getLiteral());
                     }
@@ -232,7 +240,7 @@ public final class Parser {
                             returnType = tokens.get(-1).getLiteral();
                         }
                         if (!match("DO")){
-                            throw new ParseException("Expected DO", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                            throw new ParseException("Expected DO", tokens.get(0).getIndex() + tokens.get(0).getLiteral().length());
                         }
                         exp = parseBlock();
                         if (!match("END"))
@@ -722,7 +730,7 @@ public final class Parser {
                             match(")");
                             return new Ast.Expression.Function(ident, expressions);
                         } else {
-                            throw new ParseException("Missing Parenthesis", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                            throw new ParseException("Missing Parenthesis", tokens.get(0).getIndex() + tokens.get(0).getLiteral().length());
                         }
                     } else {
                         if (!tokens.get(-1).getLiteral().equals(")")) {
@@ -751,7 +759,7 @@ public final class Parser {
             match("(");
             Ast.Expression expr1 = parseExpression();
             if (!match(")")) {
-                throw new ParseException("Missing Parenthesis", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
+                throw new ParseException("Missing Parenthesis", tokens.get(0).getIndex() + tokens.get(0).getLiteral().length());
             }
             return new Ast.Expression.Group(expr1);
         } else {
