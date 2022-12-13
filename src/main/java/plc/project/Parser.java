@@ -239,6 +239,11 @@ public final class Parser {
                         {
                             returnType = tokens.get(-1).getLiteral();
                         }
+                        else
+                        {
+                            returnType = null;
+                        }
+
                         if (!match("DO")){
                             throw new ParseException("Expected DO", tokens.get(0).getIndex() + tokens.get(0).getLiteral().length());
                         }
@@ -250,7 +255,7 @@ public final class Parser {
                     } else {
                         throw new ParseException("Missing Parenthesis", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
                     }
-                    return new Ast.Function(name, func, paramTypes, Optional.of(returnType), exp);
+                    return new Ast.Function(name, func, paramTypes, Optional.ofNullable(returnType), exp);
 
                 } else {
                     throw new ParseException("Missing Parenthesis", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
@@ -667,7 +672,7 @@ public final class Parser {
         lit = lit.replace("\\t", "\t");
         lit = lit.replace("\\\\", "\\");
         lit = lit.replace("\\'", "\'");
-        lit = lit.replace("\\", "\"");
+        lit = lit.replace("\\\"", "\"");
         return lit;
     }
     public Ast.Expression.Literal literals()
@@ -700,7 +705,7 @@ public final class Parser {
         match(Token.Type.STRING);
         String result = tokens.get(-1).getLiteral();
         result = replaceEscape(result);
-
+        result = result.substring(1, result.length() - 1);
         return new Ast.Expression.Literal(result);
     }
     public Ast.Expression parsePrimaryExpression() throws ParseException {
