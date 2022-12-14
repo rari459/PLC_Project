@@ -245,7 +245,7 @@ public final class Parser {
                         }
 
                         if (!match("DO")){
-                            throw new ParseException("Expected DO", tokens.get(0).getIndex() + tokens.get(0).getLiteral().length());
+                            throw new ParseException("Expected DO", tokens.get(-1).getIndex());
                         }
                         exp = parseBlock();
                         if (!match("END"))
@@ -735,7 +735,7 @@ public final class Parser {
                             match(")");
                             return new Ast.Expression.Function(ident, expressions);
                         } else {
-                            throw new ParseException("Missing Parenthesis", tokens.get(0).getIndex() + tokens.get(0).getLiteral().length());
+                            throw new ParseException("Missing Parenthesis", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
                         }
                     } else {
                         if (!tokens.get(-1).getLiteral().equals(")")) {
@@ -764,7 +764,7 @@ public final class Parser {
             match("(");
             Ast.Expression expr1 = parseExpression();
             if (!match(")")) {
-                throw new ParseException("Missing Parenthesis", tokens.get(0).getIndex() + tokens.get(0).getLiteral().length());
+                throw new ParseException("Missing Parenthesis", tokens.get(-1).getIndex() + tokens.get(-1).getLiteral().length());
             }
             return new Ast.Expression.Group(expr1);
         } else {
